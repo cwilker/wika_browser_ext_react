@@ -1,0 +1,9 @@
+cp node_modules/@polkadot/api/bundle-polkadot-api.js src/polkadot
+cp node_modules/@polkadot/extension-dapp/bundle-polkadot-extension-dapp.js  src/polkadot 
+cp node_modules/@polkadot/keyring/bundle-polkadot-keyring.js src/polkadot
+cp node_modules/@polkadot/types/bundle-polkadot-types.js src/polkadot
+cp node_modules/@polkadot/util-crypto/bundle-polkadot-util-crypto.js src/polkadot
+cp node_modules/@polkadot/util/bundle-polkadot-util.js src/polkadot
+snowpack build
+cp manifest.json build
+cp -R widget build
