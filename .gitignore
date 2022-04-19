@@ -7,6 +7,9 @@
 # exclude PyCharm metadata
 .idea
 
+# exclude build
+.build
+
 # exlude node_modules
 /react/node_modules
 /node_modules

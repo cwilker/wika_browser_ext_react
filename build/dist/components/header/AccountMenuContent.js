@@ -5,9 +5,16 @@ class AccountMenuContent extends React.Component {
     super(props);
     this.state = {
       togglePage: props.togglePage,
-      toggleAccountMenu: props.toggleAccountMenu
+      toggleAccountMenu: props.toggleAccountMenu,
+      accounts: props.accounts,
+      selectAccount: props.selectAccount,
+      accountSelected: props.accountSelected
     };
   }
+  disconnectAccount = () => {
+    this.props.selectAccount("");
+    this.state.togglePage(this.props.page, "accountSelect");
+  };
   render() {
     return /* @__PURE__ */ React.createElement("div", {
       className: "accountMenu"
@@ -56,8 +63,14 @@ class AccountMenuContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
+          this.state.togglePage(this.props.page, "accountSelect");
           this.state.toggleAccountMenu();
+          var accounts = this.state.accounts;
+          delete accounts[this.state.accountSelected];
+          console.log(this.state.accountSelected);
+          console.log(accounts);
+          this.props.BACKGROUND.storage.set({accounts});
+          this.disconnectAccount();
         }
       }, /* @__PURE__ */ React.createElement("div", {
         className: "accountText"

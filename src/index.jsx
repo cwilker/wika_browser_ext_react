@@ -10,6 +10,32 @@ import SearchContent from './components/header/searchContent';
 import AccountMenuContent from './components/header/AccountMenuContent';
 import SettingsContent  from './components/header/SettingsContent';
 import MainContent from './components/MainContent';
+import WikaNetwork from './network';
+import { delay } from 'rxjs';
+
+import AppContext from './utils/context' ;
+import StorageManagment from './utils/storage'
+import AES from 'crypto-js/aes';
+import Utf8 from 'crypto-js/enc-utf8';
+
+
+const BACKGROUND = {
+  cryptoReady: false,
+  network: null,
+  storage: null
+}
+
+ 
+const encryptWithAES = (text, passphrase) => {
+  return AES.encrypt(text, passphrase).toString();
+};
+
+const decryptWithAES = (ciphertext, passphrase) => {
+  const bytes = AES.decrypt(ciphertext, passphrase);
+  const originalText = bytes.toString(Utf8);
+  return originalText;
+};
+
 
 function bytesToHex(byteArray) {
   var s = '0x';
@@ -26,8 +52,7 @@ const importAccount = (phrase) => {
       address: newPair.address,
       addressRaw: bytesToHex(newPair.addressRaw),
       phrase: phrase,
-      accountName: '<Account Name>',
-      password: ''
+      accountName: '<Account Name>'
   } ;
   return account ;
 }
@@ -36,19 +61,6 @@ const generateAddAccount = () => {
   let phrase = polkadotUtilCrypto.mnemonicGenerate(12);
   return importAccount(phrase) ;
 }
-
-const tmpGen = () => {
-  let phrase = polkadotUtilCrypto.mnemonicGenerate(12);
-  return importAccount(phrase) ;
-}
-
-let accounts = {}
-accounts['a1']= tmpGen()
-accounts['a1']['key'] = 'a1'
-accounts['a2']= tmpGen()
-accounts['a2']['key'] = 'a2'
-accounts['a3']= tmpGen()
-accounts['a3']['key'] = 'a3'
 
 class App extends React.Component {
   constructor(props) {
@@ -71,12 +83,34 @@ class App extends React.Component {
       previousPage: '',
       accounts: {},
       accountSelected: '',
-      randomAccount: {}
+      randomAccount: {},
+      page: 'welcome'
     }
   }
 
-  componentDidMount = () => {
-    this.setState({page: 'welcome'});
+  componentDidMount = async () => {
+    let network = new WikaNetwork() ;
+    await network.connect(() => {
+        BACKGROUND.network = network ;
+        console.log('connected') ;
+    }) ;
+    BACKGROUND.storage = new StorageManagment();
+    console.log('componentDidMount1')
+    const accounts = await BACKGROUND.storage.get('accounts')
+    const accountSelected = await BACKGROUND.storage.get('accountSelected')
+    console.log(accounts)
+    console.log(accountSelected)
+    var keys = Object.keys(accounts)
+    var page
+    if (keys.length > 0) {
+      page = 'accountSelect'
+      if (accountSelected) {
+        page = 'account'
+      }
+    } else {
+      page = 'welcome'
+    }
+    this.setState({accounts:accounts, accountSelected:accountSelected, page:page})
   }
 
   importAccountFromPhrase = (phrase) => {
@@ -139,23 +173,37 @@ class App extends React.Component {
   newAccount = () => {
     let randomAccount =  generateAddAccount()
     this.setState({addAccount: randomAccount})
+    console.log('staging account')
+    console.log(randomAccount)
   }
 
-  addSelectAccount = (account) => {
+  addSelectAccount = async (account) => {
+    var accounts = this.state.accounts
+    var newAccountKey
     if (account.hasOwnProperty('key')) {
-      let accounts = this.state.accounts
-      accounts[account['key']] = account
-      this.setState({accounts:accounts, accountSelected: account['key']})
+      newAccountKey = account['key']
     } else {
-      let accounts = this.state.accounts
-      let newAccountKey = 'a' + (Object.keys(accounts).length + 1)
+      let accountKeys = Object.keys(accounts)
+      let maxKey = 0
+      accountKeys.forEach(function (e) {
+        if (parseInt(e.split('a')[1]) > maxKey) {
+          maxKey = parseInt(e.split('a')[1])
+        };
+      });
+      newAccountKey = 'a' + (maxKey + 1)
       account['key'] = newAccountKey
-      accounts[newAccountKey] = account
-      this.setState({accounts:accounts, accountSelected: newAccountKey})
     }
+    var pw = document.getElementById('password').value
+    account.phrase = encryptWithAES(account.phrase, pw)
+    accounts[newAccountKey] = account
+    console.log(account)
+    this.setState({accounts:accounts, accountSelected: newAccountKey})
+    console.log('success')
+    BACKGROUND.storage.set({'accounts': accounts, 'accountSelected': newAccountKey})
   }
 
   selectAccount = (accountKey) => {
+    BACKGROUND.storage.set({'accountSelected': accountKey})
     this.setState({accountSelected:accountKey})
   }
 
@@ -170,47 +218,32 @@ class App extends React.Component {
     }
   }
 
-  render = () => {
+  render = () =>  {
     return(
       <div>
         <div onClick={() => this.closeMenu()}>
+         <AppContext.Provider value={{
+            page: this.state.page,
+            togglePage: this.togglePage,
+            toggleAddAccount: this.toggleAddAccount,
+            addAccount: this.state.addAccount,
+            accounts: this.state.accounts,
+            accountSelected: this.state.accountSelected,
+            selectAccount: this.selectAccount,
+            addSelectAccount: this.addSelectAccount,
+            randomAccount: this.state.randomAccount,
+            importAccountFromPhrase: this.importAccountFromPhrase,
+            toggleAccountMenu: this.toggleAccountMenu,
+            newAccount: this.newAccount,
+         }}>
           <Header 
-            page={this.state.page}
             toggleSearch={this.toggleSearch}
             toggleMore={this.toggleMore}
             toggleSettings={this.toggleSettings}
-            togglePage={this.togglePage}
-            accountSelected={this.state.accountSelected}
-            accounts={this.state.accounts}
           />
-          <ContentContainer 
-            content={
-              <MainContent 
-                page={this.state.page} 
-                togglePage={this.togglePage}
-                toggleAddAccount={this.toggleAddAccount}
-                addAccount={this.state.addAccount}
-                accounts={this.state.accounts}
-                accountSelected={this.state.accountSelected}
-                selectAccount={this.selectAccount}
-                addSelectAccount={this.addSelectAccount}
-                randomAccount={this.state.randomAccount}
-                importAccountFromPhrase={this.importAccountFromPhrase}
-                toggleAccountMenu={this.toggleAccountMenu}
-              />
-            } 
-          />
-          <MainButton 
-            page={this.state.page}
-            togglePage={this.togglePage}
-            toggleAddAccount={this.toggleAddAccount}
-            addAccount={this.state.addAccount}
-            previousPage={this.state.previousPage}
-            newAccount={this.newAccount}
-            addSelectAccount={this.addSelectAccount}
-            randomAccount={this.state.randomAccount}
-            selectAccount={this.selectAccount}
-            />
+          <MainContent />
+          <MainButton />
+         </AppContext.Provider>
         </div>
         {this.state.isSearchOpen && <ContentContainer
           content={<SearchContent togglePage={this.togglePage}/>}
@@ -223,6 +256,7 @@ class App extends React.Component {
               toggleMore={this.toggleMore}
               toggleSettings={this.toggleSettings}
               newAccount={this.newAccount}
+              page={this.state.page}
             />
           }
           togglePage={this.togglePage}
@@ -230,11 +264,13 @@ class App extends React.Component {
         {this.state.isAccountOpen && <ContentContainer
           content={
             <AccountMenuContent 
+              BACKGROUND={BACKGROUND}
               togglePage={this.togglePage} 
               toggleAccountMenu={this.toggleAccountMenu}
               accounts={this.state.accounts}
               accountSelected={this.state.accountSelected}
               toggleAddAccount={this.toggleAddAccount}
+              selectAccount={this.selectAccount}
             />
           }
           togglePage={this.togglePage}

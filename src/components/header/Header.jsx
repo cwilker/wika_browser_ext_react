@@ -1,15 +1,17 @@
 import React from 'react';
 
+import AppContext from "../../utils/context";
+
 class Header extends React.Component {
+  static contextType = AppContext;
+  
   constructor(props) {
     super(props);
     this.state = {
-      page: this.props.page,
       text: props.text,
       toggleSearch: props.toggleSearch,
       toggleMore: props.toggleMore,
       toggleSettings: props.toggleSettings,
-      togglePage: props.togglePage
     }
   }
 
@@ -57,12 +59,12 @@ class Header extends React.Component {
   }
 
   homeToggle = () => {
-    if (this.props.accountSelected){
-      this.props.togglePage(this.props.page, 'account')
-    } else if (this.props.accounts){
-      this.props.togglePage(this.props.page, 'accountSelect')
+    if (this.context.accountSelected){
+      this.context.togglePage(this.context.page, 'account')
+    } else if (this.context.accounts){
+      this.context.togglePage(this.context.page, 'accountSelect')
     } else {
-      this.props.togglePage(this.props.page, 'welcome')
+      this.context.togglePage(this.context.page, 'welcome')
     }
   }
 
@@ -142,11 +144,11 @@ class Header extends React.Component {
           top: "19px",
           left: "70px"
         }}>
-          <this.titleSwitch page={this.props.page} />
+          <this.titleSwitch page={this.context.page} />
         </div>
           <this.cancleOrButtons 
-            page={this.props.page}
-            togglePage={this.state.togglePage}
+            page={this.context.page}
+            // togglePage={this.context.togglePage}
             toggleSearch={this.state.toggleSearch}
             toggleMore={this.state.toggleMore}
             homeToggle={this.homeToggle}

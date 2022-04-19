@@ -5,12 +5,106 @@ class MoreContent extends React.Component {
     super(props);
     this.state = {
       togglePage: props.togglePage,
-      toggleMore: props.toggleMore
+      toggleMore: props.toggleMore,
+      moreType: this.props.page == "accountSelect" ? "moreAccount" : "more"
     };
   }
+  actionButtons = () => {
+    switch (this.props.page) {
+      case "accountSelect":
+        return /* @__PURE__ */ React.createElement("div", null);
+      default:
+        return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement(Button, {
+          className: "bodyLabel moreRowTop",
+          content: /* @__PURE__ */ React.createElement("div", {
+            className: "moreButtonBottom",
+            onClick: () => {
+              this.state.togglePage(this.props.page, "like");
+              this.state.toggleMore();
+            }
+          }, /* @__PURE__ */ React.createElement("img", {
+            src: "dist/images/LikeOnly.svg",
+            alt: "search",
+            style: {marginRight: "15px", height: "25px"}
+          }), /* @__PURE__ */ React.createElement("div", {
+            className: "moreText"
+          }, "Like URL")),
+          backgroundColor: "#F9F9F9",
+          backgroundColorhover: "#E7E7E7"
+        }), /* @__PURE__ */ React.createElement(Button, {
+          className: "bodyLabel moreRowTop",
+          content: /* @__PURE__ */ React.createElement("div", {
+            className: "moreButtonBottom",
+            onClick: () => {
+              this.state.togglePage(this.props.page, "buy");
+              this.state.toggleMore();
+            }
+          }, /* @__PURE__ */ React.createElement("img", {
+            src: "dist/images/BuyGrey.svg",
+            alt: "search",
+            style: {marginRight: "15px", height: "25px"}
+          }), /* @__PURE__ */ React.createElement("div", {
+            className: "moreText"
+          }, "Buy Wika")),
+          backgroundColor: "#F9F9F9",
+          backgroundColorhover: "#E7E7E7"
+        }), /* @__PURE__ */ React.createElement(Button, {
+          className: "bodyLabel moreRowTop",
+          content: /* @__PURE__ */ React.createElement("div", {
+            className: "moreButtonBottom",
+            onClick: () => {
+              this.state.togglePage(this.props.page, "send");
+              this.state.toggleMore();
+            }
+          }, /* @__PURE__ */ React.createElement("img", {
+            src: "dist/images/SendPlane.svg",
+            alt: "search",
+            style: {marginRight: "15px", height: "25px"}
+          }), /* @__PURE__ */ React.createElement("div", {
+            className: "moreText"
+          }, "Send Wika")),
+          backgroundColor: "#F9F9F9",
+          backgroundColorhover: "#E7E7E7"
+        }), /* @__PURE__ */ React.createElement(Button, {
+          className: "bodyLabel moreRowBottom",
+          content: /* @__PURE__ */ React.createElement("div", {
+            className: "moreButtonBottom",
+            onClick: () => {
+              this.state.togglePage(this.props.page, "claim");
+              this.state.toggleMore();
+            }
+          }, /* @__PURE__ */ React.createElement("img", {
+            src: "dist/images/ClaimOnly.svg",
+            alt: "search",
+            style: {marginRight: "15px", height: "25px"}
+          }), /* @__PURE__ */ React.createElement("div", {
+            className: "moreText"
+          }, "Claim page ownership")),
+          backgroundColor: "#F9F9F9",
+          backgroundColorhover: "#E7E7E7"
+        }), /* @__PURE__ */ React.createElement(Button, {
+          className: "bodyLabel moreRow",
+          content: /* @__PURE__ */ React.createElement("div", {
+            className: "moreButtonBottom",
+            onClick: () => {
+              this.state.togglePage(this.props.page, "accountSelect");
+              this.state.toggleMore();
+            }
+          }, /* @__PURE__ */ React.createElement("img", {
+            src: "dist/images/extension/popup/Arrows/Connection.svg",
+            alt: "search",
+            style: {marginRight: "15px", height: "25px"}
+          }), /* @__PURE__ */ React.createElement("div", {
+            className: "moreText"
+          }, "Select an account")),
+          backgroundColor: "#F9F9F9",
+          backgroundColorhover: "#E7E7E7"
+        }));
+    }
+  };
   render() {
     return /* @__PURE__ */ React.createElement("div", {
-      className: "more"
+      className: this.state.moreType
     }, /* @__PURE__ */ React.createElement(Button, {
       className: "bodyLabel moreRow",
       content: /* @__PURE__ */ React.createElement("div", {
@@ -46,92 +140,7 @@ class MoreContent extends React.Component {
       }, "Import existing account")),
       backgroundColor: "#F9F9F9",
       backgroundColorhover: "#E7E7E7"
-    }), /* @__PURE__ */ React.createElement(Button, {
-      className: "bodyLabel moreRow",
-      content: /* @__PURE__ */ React.createElement("div", {
-        className: "moreButtonBottom",
-        onClick: () => {
-          this.state.togglePage(this.props.page, "accountSelect");
-          this.state.toggleMore();
-        }
-      }, /* @__PURE__ */ React.createElement("img", {
-        src: "dist/images/extension/popup/Arrows/Connection.svg",
-        alt: "search",
-        style: {marginRight: "15px", height: "25px"}
-      }), /* @__PURE__ */ React.createElement("div", {
-        className: "moreText"
-      }, "Select an account")),
-      backgroundColor: "#F9F9F9",
-      backgroundColorhover: "#E7E7E7"
-    }), /* @__PURE__ */ React.createElement(Button, {
-      className: "bodyLabel moreRowTop",
-      content: /* @__PURE__ */ React.createElement("div", {
-        className: "moreButtonBottom",
-        onClick: () => {
-          this.state.togglePage(this.props.page, "like");
-          this.state.toggleMore();
-        }
-      }, /* @__PURE__ */ React.createElement("img", {
-        src: "dist/images/LikeOnly.svg",
-        alt: "search",
-        style: {marginRight: "15px", height: "25px"}
-      }), /* @__PURE__ */ React.createElement("div", {
-        className: "moreText"
-      }, "Like URL")),
-      backgroundColor: "#F9F9F9",
-      backgroundColorhover: "#E7E7E7"
-    }), /* @__PURE__ */ React.createElement(Button, {
-      className: "bodyLabel moreRowTop",
-      content: /* @__PURE__ */ React.createElement("div", {
-        className: "moreButtonBottom",
-        onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleMore();
-        }
-      }, /* @__PURE__ */ React.createElement("img", {
-        src: "dist/images/BuyGrey.svg",
-        alt: "search",
-        style: {marginRight: "15px", height: "25px"}
-      }), /* @__PURE__ */ React.createElement("div", {
-        className: "moreText"
-      }, "Buy Wika")),
-      backgroundColor: "#F9F9F9",
-      backgroundColorhover: "#E7E7E7"
-    }), /* @__PURE__ */ React.createElement(Button, {
-      className: "bodyLabel moreRowTop",
-      content: /* @__PURE__ */ React.createElement("div", {
-        className: "moreButtonBottom",
-        onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleMore();
-        }
-      }, /* @__PURE__ */ React.createElement("img", {
-        src: "dist/images/SendPlane.svg",
-        alt: "search",
-        style: {marginRight: "15px", height: "25px"}
-      }), /* @__PURE__ */ React.createElement("div", {
-        className: "moreText"
-      }, "Send Wika")),
-      backgroundColor: "#F9F9F9",
-      backgroundColorhover: "#E7E7E7"
-    }), /* @__PURE__ */ React.createElement(Button, {
-      className: "bodyLabel moreRowBottom",
-      content: /* @__PURE__ */ React.createElement("div", {
-        className: "moreButtonBottom",
-        onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleMore();
-        }
-      }, /* @__PURE__ */ React.createElement("img", {
-        src: "dist/images/ClaimOnly.svg",
-        alt: "search",
-        style: {marginRight: "15px", height: "25px"}
-      }), /* @__PURE__ */ React.createElement("div", {
-        className: "moreText"
-      }, "Claim page ownership")),
-      backgroundColor: "#F9F9F9",
-      backgroundColorhover: "#E7E7E7"
-    }), /* @__PURE__ */ React.createElement(Button, {
+    }), this.actionButtons(), /* @__PURE__ */ React.createElement(Button, {
       className: "bodyLabel moreRowTop",
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",

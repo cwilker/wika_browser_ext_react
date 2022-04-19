@@ -3,8 +3,11 @@ import Identicon from 'react-identicons';
 import Button from './Button';
 import MainFunctions from './MainFunctions';
 import {copyToClipboard} from "./../utils/misc";
+import AppContext from "../utils/context";
 
 class YourAccount extends React.Component {
+  static contextType = AppContext;
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +31,7 @@ class YourAccount extends React.Component {
   }
 
   contentInjector() {
-    if (this.state.content){
+    if (this.props.content){
       return (
         <div style={{paddingTop:'100px', paddingRight:'18px', paddingLeft:'18px'}}>
           {this.props.content}
@@ -38,7 +41,7 @@ class YourAccount extends React.Component {
   }
 
   renderSelectButtonOrOptions() {
-    switch(this.props.page) {
+    switch(this.context.page) {
       case 'accountSelect':
         return (
           <div>
@@ -65,7 +68,7 @@ class YourAccount extends React.Component {
               src="dist/images/extension/Vector 2.svg"></img>
             <img 
               title="Account Settings"
-              onClick={() => this.props.toggleAccountMenu()}
+              onClick={() => this.context.toggleAccountMenu()}
               style={{position: 'absolute', top:'18px', left: '468px', cursor:'pointer'}} 
               src="dist/images/extension/User Interface/Menu.svg"></img>
             <div style={{paddingTop:'100px', paddingRight:'18px', paddingLeft:'18px'}}>
@@ -102,23 +105,19 @@ class YourAccount extends React.Component {
 }
 
 class MainContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
-      toggleAddAccount: props.toggleAddAccount,
-      page: props.page,
-      togglePage: props.togglePage,
-      selectAccount: props.selectAccount
+      // selectAccount: props.selectAccount
     }
   }
 
   static getDerivedStateFromProps(props, state) {
     return {
-      page: props.page,
-      addAccount: props.addAccount,
-      accounts: props.accounts,
-      accountSelected: props.accountSelected,
-      randomAccount: props.randomAccount
+      // accounts: props.accounts,
+      // accountSelected: props.accountSelected,
+      // randomAccount: props.randomAccount
     }
   }
 
@@ -129,8 +128,8 @@ class MainContent extends React.Component {
   setAccount = (phrase) => {
     if (phrase.split(' ').length % 12 === 0){
         try {
-          var addAccount = this.props.importAccountFromPhrase(phrase);
-          this.state.toggleAddAccount(addAccount)
+          var addAccount = this.context.importAccountFromPhrase(phrase);
+          this.context.toggleAddAccount(addAccount)
         } catch (error) {
           alert(error);
         }
@@ -141,7 +140,7 @@ class MainContent extends React.Component {
   }
 
   render() {
-    switch(this.props.page) {
+    switch(this.context.page) {
       case 'welcome':
         return(
           <div className='mainContent'>
@@ -171,13 +170,13 @@ class MainContent extends React.Component {
         return (
           <div className='mainContent bodyLabel'>
             <div className='mainInside' >
-              <YourAccount toggleAccountMenu={this.props.toggleAccountMenu} account={ this.state.addAccount } page={this.props.page} />
+              <YourAccount toggleAccountMenu={this.context.toggleAccountMenu} account={ this.context.addAccount } page={this.context.page} />
               <div style={{paddingTop:25}}>
                 <div style={{padding:5}}>
                   EXISTING 12 OR 24 WORD MNEMONIC SEED
                 </div>
                 <div>
-                  <textarea id='importSeed'
+                  <textarea id='importSeed' defaultValue=''
                     type='text' className='mainText accountBox' style={{height: '70px', color:'#A77121'}}
                   />
                 </div>
@@ -212,14 +211,14 @@ class MainContent extends React.Component {
         return (
           <div className='mainContent bodyLabel'>
             <div className='mainInside' >
-              <YourAccount  toggleAccountMenu={this.props.toggleAccountMenu} account={this.state.addAccount}  page={this.props.page} />
+              <YourAccount  toggleAccountMenu={this.context.toggleAccountMenu} account={this.context.addAccount}  page={this.context.page} />
               <div style={{paddingTop:25}}>
                 <div style={{padding:5}}>
                   GENERATED 12-WORD MNEMONIC SEED 
                 </div>
-                <textarea id='seed' className='accountBox' style={{color:'#A77121', width:'505px'}}>
+                <textarea id='seed' className='accountBox' defaultValue={this.context.addAccount.phrase} style={{color:'#A77121', width:'505px'}}>
                   {/* <div style={{padding:10, color:'#A77121'}}> */}
-                    {this.state.addAccount.phrase}
+                    {/* {this.state.addAccount.phrase} */}
                   {/* </div> */}
                 </textarea>
                 <div  style={{paddingTop:'40px', cursor:'pointer'}}
@@ -247,48 +246,50 @@ class MainContent extends React.Component {
         return (        
           <div className='mainContent bodyLabel'>
             <div className='mainInside' >
-              <YourAccount  toggleAccountMenu={this.props.toggleAccountMenu} account={this.state.addAccount}  page={this.props.page} />
-              <div style={{paddingTop:25}}>
-                <div style={{padding:5}}>
-                  ACCOUNT NAME
+              <YourAccount  toggleAccountMenu={this.context.toggleAccountMenu} account={this.context.addAccount}  page={this.context.page} />
+              <form>
+                <div style={{paddingTop:25}}>
+                  <div style={{padding:5}}>
+                    ACCOUNT NAME
+                  </div>
+                  <input 
+                    id='accountName' type='text' className='mainText' placeholder='<Account Name>' autoComplete='username'
+                    onChange={() => {this.context.addAccount.accountName = document.getElementById('accountName').value}}
+                  />
                 </div>
-                <input 
-                  id='accountName' type='text' className='mainText' placeholder='<Account Name>' 
-                  onChange={() => {this.state.addAccount.accountName = document.getElementById('accountName').value}}
-                />
-              </div>
-              <div style={{paddingTop:25}}>
-                <div style={{padding:5}}>
-                  A NEW PASSWORD FOR YOUR ACCOUNT
+                <div style={{paddingTop:25}}>
+                  <div style={{padding:5}}>
+                    A NEW PASSWORD FOR YOUR ACCOUNT
+                  </div>
+                  <input 
+                    id='password' type='password' className='mainText' placeholder='<your password>' autoComplete='new-password'
+                  />
                 </div>
-                <input 
-                  id='password' type='password' className='mainText' placeholder='<your password>' 
-                  onChange={() => {this.state.addAccount.password = document.getElementById('password').value}}
-                />
-              </div>
-              <div style={{paddingTop:25}}>
-                <div style={{padding:5}}>
-                  CONFIRM PASSWORD
+                <div style={{paddingTop:25}}>
+                  <div style={{padding:5}}>
+                    CONFIRM PASSWORD
+                  </div>
+                  <input 
+                    id='confirmPassword' type='password' className='mainText' placeholder='<your password>' autoComplete='new-password'
+                  />
                 </div>
-                <input 
-                  type='password' className='mainText' placeholder='<your password>' 
-                />
-              </div>
+              </form>
             </div>
           </div>
         )
       case 'accountSelect':
-        let accountArray = Object.values(this.state.accounts)
-        let accountKeys = Object.keys(this.state.accounts)
+        let accountArray = Object.values(this.context.accounts)
+        // console.log(accountArray)
+        let accountKeys = Object.keys(this.context.accounts)
         const accountInfo = accountArray.map((account, i) =>{
           return (
-            <div key={i} style={{paddingBottom: '20px'}} onClick={() => {this.state.togglePage(this.props.page, 'account'); this.props.selectAccount(accountKeys[i])}}>
+            <div key={i} style={{paddingBottom: '20px'}} onClick={() => {this.context.togglePage(this.context.page, 'account'); this.context.selectAccount(accountKeys[i])}}>
               <Button 
                 content={
                   <YourAccount 
-                    toggleAccountMenu={this.props.toggleAccountMenu} 
+                    toggleAccountMenu={this.context.toggleAccountMenu} 
                     account={accountArray[i]}
-                    page={this.props.page} 
+                    page={this.context.page} 
                   />
                 } 
                 className='a'
@@ -320,11 +321,11 @@ class MainContent extends React.Component {
           <div className='mainContent bodyLabel'>
             <div className='mainInside' >
               <YourAccount 
-                toggleAccountMenu={this.props.toggleAccountMenu}
-                page={this.props.page} 
-                account={this.props.accounts[this.props.accountSelected]} 
+                toggleAccountMenu={this.context.toggleAccountMenu}
+                page={this.context.page} 
+                account={this.context.accounts[this.context.accountSelected]} 
                 style={{height:'430px'}} 
-                content={<MainFunctions   page={this.props.page} accounts={this.props.accounts} accountSelected={this.props.accountSelected} togglePage={this.state.togglePage}/>}
+                content={<MainFunctions   page={this.context.page} accounts={this.context.accounts} accountSelected={this.context.accountSelected} togglePage={this.context.togglePage}/>}
               />
             </div>
           </div>

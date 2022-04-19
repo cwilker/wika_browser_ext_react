@@ -21,9 +21,9 @@ class SettingsContent extends React.Component {
                 THEME
               </div>
               <div className="bodyCopy">
-                LIGHT <label class="switch">
+                LIGHT <label className="switch">
                   <input type="checkbox" />
-                  <span class="slider round"></span>
+                  <span className="slider round"></span>
                 </label> DARK
               </div>
             </div>

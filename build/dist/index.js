@@ -10,6 +10,25 @@ import SearchContent from "./components/header/searchContent.js";
 import AccountMenuContent from "./components/header/AccountMenuContent.js";
 import SettingsContent from "./components/header/SettingsContent.js";
 import MainContent from "./components/MainContent.js";
+import WikaNetwork from "./network.js";
+import {delay} from "../snowpack/pkg/rxjs.js";
+import AppContext from "./utils/context.js";
+import StorageManagment from "./utils/storage.js";
+import AES from "../snowpack/pkg/crypto-js/aes.js";
+import Utf8 from "../snowpack/pkg/crypto-js/enc-utf8.js";
+const BACKGROUND = {
+  cryptoReady: false,
+  network: null,
+  storage: null
+};
+const encryptWithAES = (text, passphrase) => {
+  return AES.encrypt(text, passphrase).toString();
+};
+const decryptWithAES = (ciphertext, passphrase) => {
+  const bytes = AES.decrypt(ciphertext, passphrase);
+  const originalText = bytes.toString(Utf8);
+  return originalText;
+};
 function bytesToHex(byteArray) {
   var s = "0x";
   byteArray.forEach(function(byte) {
@@ -24,8 +43,7 @@ const importAccount = (phrase) => {
     address: newPair.address,
     addressRaw: bytesToHex(newPair.addressRaw),
     phrase,
-    accountName: "<Account Name>",
-    password: ""
+    accountName: "<Account Name>"
   };
   return account;
 };
@@ -33,17 +51,6 @@ const generateAddAccount = () => {
   let phrase = polkadotUtilCrypto.mnemonicGenerate(12);
   return importAccount(phrase);
 };
-const tmpGen = () => {
-  let phrase = polkadotUtilCrypto.mnemonicGenerate(12);
-  return importAccount(phrase);
-};
-let accounts = {};
-accounts["a1"] = tmpGen();
-accounts["a1"]["key"] = "a1";
-accounts["a2"] = tmpGen();
-accounts["a2"]["key"] = "a2";
-accounts["a3"] = tmpGen();
-accounts["a3"]["key"] = "a3";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -65,11 +72,33 @@ class App extends React.Component {
       previousPage: "",
       accounts: {},
       accountSelected: "",
-      randomAccount: {}
+      randomAccount: {},
+      page: "welcome"
     };
   }
-  componentDidMount = () => {
-    this.setState({page: "welcome"});
+  componentDidMount = async () => {
+    let network = new WikaNetwork();
+    await network.connect(() => {
+      BACKGROUND.network = network;
+      console.log("connected");
+    });
+    BACKGROUND.storage = new StorageManagment();
+    console.log("componentDidMount1");
+    const accounts = await BACKGROUND.storage.get("accounts");
+    const accountSelected = await BACKGROUND.storage.get("accountSelected");
+    console.log(accounts);
+    console.log(accountSelected);
+    var keys = Object.keys(accounts);
+    var page;
+    if (keys.length > 0) {
+      page = "accountSelect";
+      if (accountSelected) {
+        page = "account";
+      }
+    } else {
+      page = "welcome";
+    }
+    this.setState({accounts, accountSelected, page});
   };
   importAccountFromPhrase = (phrase) => {
     return importAccount(phrase);
@@ -124,21 +153,36 @@ class App extends React.Component {
   newAccount = () => {
     let randomAccount = generateAddAccount();
     this.setState({addAccount: randomAccount});
+    console.log("staging account");
+    console.log(randomAccount);
   };
-  addSelectAccount = (account) => {
+  addSelectAccount = async (account) => {
+    var accounts = this.state.accounts;
+    var newAccountKey;
     if (account.hasOwnProperty("key")) {
-      let accounts2 = this.state.accounts;
-      accounts2[account["key"]] = account;
-      this.setState({accounts: accounts2, accountSelected: account["key"]});
+      newAccountKey = account["key"];
     } else {
-      let accounts2 = this.state.accounts;
-      let newAccountKey = "a" + (Object.keys(accounts2).length + 1);
+      let accountKeys = Object.keys(accounts);
+      let maxKey = 0;
+      accountKeys.forEach(function(e) {
+        if (parseInt(e.split("a")[1]) > maxKey) {
+          maxKey = parseInt(e.split("a")[1]);
+        }
+        ;
+      });
+      newAccountKey = "a" + (maxKey + 1);
       account["key"] = newAccountKey;
-      accounts2[newAccountKey] = account;
-      this.setState({accounts: accounts2, accountSelected: newAccountKey});
     }
+    var pw = document.getElementById("password").value;
+    account.phrase = encryptWithAES(account.phrase, pw);
+    accounts[newAccountKey] = account;
+    console.log(account);
+    this.setState({accounts, accountSelected: newAccountKey});
+    console.log("success");
+    BACKGROUND.storage.set({accounts, accountSelected: newAccountKey});
   };
   selectAccount = (accountKey) => {
+    BACKGROUND.storage.set({accountSelected: accountKey});
     this.setState({accountSelected: accountKey});
   };
   closeMenu = () => {
@@ -154,6 +198,20 @@ class App extends React.Component {
   render = () => {
     return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
       onClick: () => this.closeMenu()
+    }, /* @__PURE__ */ React.createElement(AppContext.Provider, {
+      value: {
+        page: this.state.page,
+        togglePage: this.togglePage,
+        toggleAddAccount: this.toggleAddAccount,
+        addAccount: this.state.addAccount,
+        accounts: this.state.accounts,
+        accountSelected: this.state.accountSelected,
+        selectAccount: this.selectAccount,
+        addSelectAccount: this.addSelectAccount,
+        randomAccount: this.state.randomAccount,
+        importAccountFromPhrase: this.importAccountFromPhrase,
+        toggleAccountMenu: this.toggleAccountMenu
+      }
     }, /* @__PURE__ */ React.createElement(Header, {
       page: this.state.page,
       toggleSearch: this.toggleSearch,
@@ -186,7 +244,7 @@ class App extends React.Component {
       addSelectAccount: this.addSelectAccount,
       randomAccount: this.state.randomAccount,
       selectAccount: this.selectAccount
-    })), this.state.isSearchOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
+    }))), this.state.isSearchOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
       content: /* @__PURE__ */ React.createElement(SearchContent, {
         togglePage: this.togglePage
       }),
@@ -196,16 +254,19 @@ class App extends React.Component {
         togglePage: this.togglePage,
         toggleMore: this.toggleMore,
         toggleSettings: this.toggleSettings,
-        newAccount: this.newAccount
+        newAccount: this.newAccount,
+        page: this.state.page
       }),
       togglePage: this.togglePage
     }), this.state.isAccountOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
       content: /* @__PURE__ */ React.createElement(AccountMenuContent, {
+        BACKGROUND,
         togglePage: this.togglePage,
         toggleAccountMenu: this.toggleAccountMenu,
         accounts: this.state.accounts,
         accountSelected: this.state.accountSelected,
-        toggleAddAccount: this.toggleAddAccount
+        toggleAddAccount: this.toggleAddAccount,
+        selectAccount: this.selectAccount
       }),
       togglePage: this.togglePage
     }), this.state.isSettingsOpen && /* @__PURE__ */ React.createElement(ContentContainer, {

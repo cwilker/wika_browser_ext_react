@@ -6,8 +6,16 @@ class AccountMenuContent extends React.Component {
     super(props);
     this.state = {
       togglePage: props.togglePage,
-      toggleAccountMenu: props.toggleAccountMenu
+      toggleAccountMenu: props.toggleAccountMenu,
+      accounts: props.accounts,
+      selectAccount: props.selectAccount,
+      accountSelected: props.accountSelected
     }
+  }
+
+  disconnectAccount = () => {
+    this.props.selectAccount('')
+    this.state.togglePage(this.props.page, 'accountSelect')
   }
   
   render() {
@@ -50,10 +58,19 @@ class AccountMenuContent extends React.Component {
           backgroundColorhover='#E7E7E7'
         />
 
-
         <Button className="bodyCopy moreRowBottom"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip'); this.state.toggleAccountMenu()}}>
+            <div className="moreButtonBottom" onClick={() => {
+              this.state.togglePage(this.props.page, 'accountSelect')
+              this.state.toggleAccountMenu()
+              var accounts = this.state.accounts
+              delete accounts[this.state.accountSelected] 
+              console.log(this.state.accountSelected)
+              console.log(accounts)
+              this.props.BACKGROUND.storage.set({'accounts': accounts})
+              // chrome.storage.local.set({'accounts': accounts}, function() {})
+              this.disconnectAccount()
+            }}>
               <div className='accountText'>
                 Forget Account
               </div>

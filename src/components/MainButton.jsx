@@ -1,14 +1,13 @@
 import React from 'react';
 import Button from './Button';
+import AppContext from "../utils/context";
 
 class MainButton extends React.Component {
+  static contextType = AppContext;
+
   constructor(props) {
     super(props);
-    this.state = {
-      togglePage: props.togglePage,
-      toggleAddAccount: props.toggleAddAccount,
-      addSelectAccount: props.addSelectAccount
-    }
+    this.state = {}
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -18,12 +17,12 @@ class MainButton extends React.Component {
   }
 
   disconnectAccount = () => {
-    this.props.selectAccount('')
-    this.state.togglePage(this.props.page, 'accountSelect')
+    this.context.selectAccount('')
+    this.context.togglePage(this.context.page, 'accountSelect')
   }
 
   render() {
-    switch(this.props.page) {
+    switch(this.context.page) {
       case 'welcome':
         return (
           <div style={{
@@ -32,7 +31,7 @@ class MainButton extends React.Component {
             height:'75px',
             width: '550px',
           }}>
-            <div onClick={() => this.state.togglePage(this.props.page, 'setup')}>
+            <div onClick={() => this.context.togglePage(this.context.page, 'setup')}>
               <Button content={
                 <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
                   Get Started
@@ -58,7 +57,7 @@ class MainButton extends React.Component {
             height:'75px',
             width: '550px',
           }}>
-            <div onClick={() => this.state.togglePage(this.props.page, 'account')}>
+            <div onClick={() => this.context.togglePage(this.context.page, 'account')}>
               <Button content={
                 <div id='asdf' className='bodyCopy' 
                   style={{padding: '14px', color: "white"}} 
@@ -79,9 +78,7 @@ class MainButton extends React.Component {
             height:'75px',
             width: '550px',
           }}>
-            {/* <div onClick={() => this.state.togglePage(this.props.page, 'accountSelect')}> */}
             <div onClick={() => this.disconnectAccount()}>
-              {/* only including this img tag because it fixes a weird react bug */}
               <img></img>
               <Button content={
                 <div className='bodyCopy' 
@@ -105,7 +102,7 @@ class MainButton extends React.Component {
               height:'75px',
               width: '275px',
             }}>
-              <div onClick={() => {this.state.togglePage(this.props.page, 'generate'); this.props.newAccount()}}>
+              <div onClick={() => {this.context.togglePage(this.context.page, 'generate'); this.context.newAccount()}}>
                 <Button content={
                   <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
                     Create Account
@@ -121,7 +118,7 @@ class MainButton extends React.Component {
               height:'75px',
               width: '275px',
             }}>
-              <div onClick={() => this.state.togglePage(this.props.page, 'addAccount')}>
+              <div onClick={() => this.context.togglePage(this.context.page, 'addAccount')}>
                 <Button content={
                   <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
                     Import Account
@@ -140,7 +137,7 @@ class MainButton extends React.Component {
             height:'75px',
             width: '550px',
           }}>
-            <div onClick={() => {this.state.togglePage(this.props.page, 'generate2')}}>
+            <div onClick={() => {this.context.togglePage(this.context.page, 'generate2')}}>
               <Button content={
                 <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
                   Next Step
@@ -157,7 +154,7 @@ class MainButton extends React.Component {
             height:'75px',
             width: '550px',
           }}>
-            <div onClick={() => {this.state.togglePage(this.props.page, 'generate2')}}>
+            <div onClick={() => {this.context.togglePage(this.context.page, 'generate2')}}>
               <Button content={
                 <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
                   Next Step
@@ -181,7 +178,7 @@ class MainButton extends React.Component {
               height:'75px',
               width: '80px'
             }}>
-              <div onClick={() => {this.state.togglePage(this.props.page, this.props.previousPage)}}>
+              <div onClick={() => {this.context.togglePage(this.context.page, this.context.previousPage)}}>
                 <Button 
                   content={
                     <div className='bodyCopy' style={{padding: '12px', color: "white"}}>
@@ -199,7 +196,7 @@ class MainButton extends React.Component {
               height:'75px',
               width: '470px'
             }}>
-              <div onClick={() => {this.state.togglePage(this.props.page, 'account'); this.props.addSelectAccount(this.props.addAccount); this.state.toggleAddAccount({accountName:'<Account Name>', address:'N/A'})}}>
+              <div onClick={() => {this.context.togglePage(this.context.page, 'account'); this.context.addSelectAccount(this.context.addAccount); this.context.toggleAddAccount({accountName:'<Account Name>', address:'N/A'})}}>
                 <Button 
                   content={
                     <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
@@ -229,7 +226,7 @@ class MainButton extends React.Component {
             height:'75px',
             width: '550px',
           }}>
-            <div onClick={() => this.state.togglePage(this.props.page, 'welcome')}>
+            <div onClick={() => this.context.togglePage(this.context.page, 'welcome')}>
               <Button content={
                 <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
                   <div>Work in progress</div>

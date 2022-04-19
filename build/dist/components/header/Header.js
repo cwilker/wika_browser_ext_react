@@ -1,5 +1,7 @@
 import React from "../../../snowpack/pkg/react.js";
+import AppContext from "../../utils/context.js";
 class Header extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {

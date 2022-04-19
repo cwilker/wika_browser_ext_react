@@ -25,5 +25,8 @@ export default {
   buildOptions: {
     metaUrlPath: "snowpack",
   },
-  exclude: ['**/widget/**/*']
+  exclude: ['**/widget/**/*'],
+  env: {
+    NODE_ENV: 'dev',
+  }
 };

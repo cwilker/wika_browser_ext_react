@@ -160,6 +160,7 @@ class MainContent extends React.Component {
           style: {padding: 5}
         }, "EXISTING 12 OR 24 WORD MNEMONIC SEED"), /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("textarea", {
           id: "importSeed",
+          defaultValue: "",
           type: "text",
           className: "mainText accountBox",
           style: {height: "70px", color: "#A77121"}
@@ -197,8 +198,9 @@ class MainContent extends React.Component {
         }, "GENERATED 12-WORD MNEMONIC SEED"), /* @__PURE__ */ React.createElement("textarea", {
           id: "seed",
           className: "accountBox",
+          defaultValue: this.state.addAccount.phrase,
           style: {color: "#A77121", width: "505px"}
-        }, this.state.addAccount.phrase), /* @__PURE__ */ React.createElement("div", {
+        }), /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: "40px", cursor: "pointer"},
           onClick: this.copyElement("seed")
         }, /* @__PURE__ */ React.createElement("img", {
@@ -225,7 +227,7 @@ class MainContent extends React.Component {
           toggleAccountMenu: this.props.toggleAccountMenu,
           account: this.state.addAccount,
           page: this.props.page
-        }), /* @__PURE__ */ React.createElement("div", {
+        }), /* @__PURE__ */ React.createElement("form", null, /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: 25}
         }, /* @__PURE__ */ React.createElement("div", {
           style: {padding: 5}
@@ -234,6 +236,7 @@ class MainContent extends React.Component {
           type: "text",
           className: "mainText",
           placeholder: "<Account Name>",
+          autoComplete: "username",
           onChange: () => {
             this.state.addAccount.accountName = document.getElementById("accountName").value;
           }
@@ -246,18 +249,18 @@ class MainContent extends React.Component {
           type: "password",
           className: "mainText",
           placeholder: "<your password>",
-          onChange: () => {
-            this.state.addAccount.password = document.getElementById("password").value;
-          }
+          autoComplete: "new-password"
         })), /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: 25}
         }, /* @__PURE__ */ React.createElement("div", {
           style: {padding: 5}
         }, "CONFIRM PASSWORD"), /* @__PURE__ */ React.createElement("input", {
+          id: "confirmPassword",
           type: "password",
           className: "mainText",
-          placeholder: "<your password>"
-        }))));
+          placeholder: "<your password>",
+          autoComplete: "new-password"
+        })))));
       case "accountSelect":
         let accountArray = Object.values(this.state.accounts);
         let accountKeys = Object.keys(this.state.accounts);
