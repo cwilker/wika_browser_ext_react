@@ -4,14 +4,7 @@ class Header extends React.Component {
   static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {
-      page: this.props.page,
-      text: props.text,
-      toggleSearch: props.toggleSearch,
-      toggleMore: props.toggleMore,
-      toggleSettings: props.toggleSettings,
-      togglePage: props.togglePage
-    };
+    this.state = {};
   }
   static getDerivedStateFromProps(props, state) {
     return {
@@ -70,12 +63,12 @@ class Header extends React.Component {
     }
   };
   homeToggle = () => {
-    if (this.props.accountSelected) {
-      this.props.togglePage(this.props.page, "account");
-    } else if (this.props.accounts) {
-      this.props.togglePage(this.props.page, "accountSelect");
+    if (this.context.accountSelected) {
+      this.context.togglePage(this.context.page, "account");
+    } else if (this.context.accounts) {
+      this.context.togglePage(this.context.page, "accountSelect");
     } else {
-      this.props.togglePage(this.props.page, "welcome");
+      this.context.togglePage(this.context.page, "welcome");
     }
   };
   cancleOrButtons(props) {
@@ -153,14 +146,13 @@ class Header extends React.Component {
         left: "70px"
       }
     }, /* @__PURE__ */ React.createElement(this.titleSwitch, {
-      page: this.props.page
+      page: this.context.page
     })), /* @__PURE__ */ React.createElement(this.cancleOrButtons, {
-      page: this.props.page,
-      togglePage: this.state.togglePage,
-      toggleSearch: this.state.toggleSearch,
-      toggleMore: this.state.toggleMore,
+      page: this.context.page,
+      toggleSearch: this.context.toggleSearch,
+      toggleMore: this.context.toggleMore,
       homeToggle: this.homeToggle,
-      toggleSettings: this.state.toggleSettings
+      toggleSettings: this.context.toggleSettings
     }));
   }
 }

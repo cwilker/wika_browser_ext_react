@@ -210,74 +210,13 @@ class App extends React.Component {
         addSelectAccount: this.addSelectAccount,
         randomAccount: this.state.randomAccount,
         importAccountFromPhrase: this.importAccountFromPhrase,
-        toggleAccountMenu: this.toggleAccountMenu
-      }
-    }, /* @__PURE__ */ React.createElement(Header, {
-      page: this.state.page,
-      toggleSearch: this.toggleSearch,
-      toggleMore: this.toggleMore,
-      toggleSettings: this.toggleSettings,
-      togglePage: this.togglePage,
-      accountSelected: this.state.accountSelected,
-      accounts: this.state.accounts
-    }), /* @__PURE__ */ React.createElement(ContentContainer, {
-      content: /* @__PURE__ */ React.createElement(MainContent, {
-        page: this.state.page,
-        togglePage: this.togglePage,
-        toggleAddAccount: this.toggleAddAccount,
-        addAccount: this.state.addAccount,
-        accounts: this.state.accounts,
-        accountSelected: this.state.accountSelected,
-        selectAccount: this.selectAccount,
-        addSelectAccount: this.addSelectAccount,
-        randomAccount: this.state.randomAccount,
-        importAccountFromPhrase: this.importAccountFromPhrase,
-        toggleAccountMenu: this.toggleAccountMenu
-      })
-    }), /* @__PURE__ */ React.createElement(MainButton, {
-      page: this.state.page,
-      togglePage: this.togglePage,
-      toggleAddAccount: this.toggleAddAccount,
-      addAccount: this.state.addAccount,
-      previousPage: this.state.previousPage,
-      newAccount: this.newAccount,
-      addSelectAccount: this.addSelectAccount,
-      randomAccount: this.state.randomAccount,
-      selectAccount: this.selectAccount
-    }))), this.state.isSearchOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
-      content: /* @__PURE__ */ React.createElement(SearchContent, {
-        togglePage: this.togglePage
-      }),
-      togglePage: this.togglePage
-    }), this.state.isMoreOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
-      content: /* @__PURE__ */ React.createElement(MoreContent, {
-        togglePage: this.togglePage,
-        toggleMore: this.toggleMore,
-        toggleSettings: this.toggleSettings,
-        newAccount: this.newAccount,
-        page: this.state.page
-      }),
-      togglePage: this.togglePage
-    }), this.state.isAccountOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
-      content: /* @__PURE__ */ React.createElement(AccountMenuContent, {
-        BACKGROUND,
-        togglePage: this.togglePage,
         toggleAccountMenu: this.toggleAccountMenu,
-        accounts: this.state.accounts,
-        accountSelected: this.state.accountSelected,
-        toggleAddAccount: this.toggleAddAccount,
-        selectAccount: this.selectAccount
-      }),
-      togglePage: this.togglePage
-    }), this.state.isSettingsOpen && /* @__PURE__ */ React.createElement(ContentContainer, {
-      content: /* @__PURE__ */ React.createElement(SettingsContent, {
-        togglePage: this.togglePage,
+        newAccount: this.newAccount,
+        toggleSearch: this.toggleSearch,
         toggleMore: this.toggleMore,
-        toggleSettings: this.toggleSettings,
-        newAccount: this.newAccount
-      }),
-      togglePage: this.togglePage
-    }));
+        toggleSettings: this.toggleSettings
+      }
+    }, /* @__PURE__ */ React.createElement(Header, null), /* @__PURE__ */ React.createElement(MainContent, null), /* @__PURE__ */ React.createElement(MainButton, null), this.state.isSearchOpen && /* @__PURE__ */ React.createElement(SearchContent, null), this.state.isMoreOpen && /* @__PURE__ */ React.createElement(MoreContent, null), this.state.isAccountOpen && /* @__PURE__ */ React.createElement(AccountMenuContent, null), this.state.isSettingsOpen && /* @__PURE__ */ React.createElement(SettingsContent, null))));
   };
 }
 ReactDOM.render(/* @__PURE__ */ React.createElement(App, null), document.getElementById("root"));

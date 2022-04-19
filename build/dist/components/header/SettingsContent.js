@@ -1,12 +1,11 @@
 import React from "../../../snowpack/pkg/react.js";
 import Button from "../Button.js";
+import AppContext from "../../utils/context.js";
 class SettingsContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {
-      togglePage: props.togglePage,
-      toggleMore: props.toggleMore
-    };
+    this.state = {};
   }
   render() {
     return /* @__PURE__ */ React.createElement("div", {
@@ -20,11 +19,11 @@ class SettingsContent extends React.Component {
       }, "THEME"), /* @__PURE__ */ React.createElement("div", {
         className: "bodyCopy"
       }, "LIGHT ", /* @__PURE__ */ React.createElement("label", {
-        class: "switch"
+        className: "switch"
       }, /* @__PURE__ */ React.createElement("input", {
         type: "checkbox"
       }), /* @__PURE__ */ React.createElement("span", {
-        class: "slider round"
+        className: "slider round"
       })), " DARK")),
       backgroundColor: "#F9F9F9",
       backgroundColorhover: "#E7E7E7"
@@ -33,7 +32,7 @@ class SettingsContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
+          this.context.togglePage(this.props.page, "wip");
         }
       }, /* @__PURE__ */ React.createElement("img", {
         src: "dist/images/keyhole.svg",
@@ -49,7 +48,7 @@ class SettingsContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
+          this.context.togglePage(this.props.page, "wip");
         }
       }, /* @__PURE__ */ React.createElement("img", {
         src: "dist/images/window.svg",

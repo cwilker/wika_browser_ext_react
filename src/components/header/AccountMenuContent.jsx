@@ -1,21 +1,18 @@
 import React from 'react';
 import Button from '../Button'
+import AppContext from "../../utils/context";
 
 class AccountMenuContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
-      togglePage: props.togglePage,
-      toggleAccountMenu: props.toggleAccountMenu,
-      accounts: props.accounts,
-      selectAccount: props.selectAccount,
-      accountSelected: props.accountSelected
     }
   }
 
   disconnectAccount = () => {
-    this.props.selectAccount('')
-    this.state.togglePage(this.props.page, 'accountSelect')
+    this.context.selectAccount('')
+    this.context.togglePage(this.props.page, 'accountSelect')
   }
   
   render() {
@@ -24,7 +21,7 @@ class AccountMenuContent extends React.Component {
 
         <Button className="bodyCopy moreRowTop"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'generate2'); this.props.toggleAddAccount(this.props.accounts[this.props.accountSelected]); this.state.toggleAccountMenu()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'generate2'); this.context.toggleAddAccount(this.context.accounts[this.context.accountSelected]); this.context.toggleAccountMenu()}}>
               <div className='accountText'>
                 Rename
               </div>
@@ -36,7 +33,7 @@ class AccountMenuContent extends React.Component {
 
         <Button className="bodyCopy moreRowBottom"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip'); this.state.toggleAccountMenu()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'wip'); this.context.toggleAccountMenu()}}>
               <div className='accountText'>
                 Derive New Account
               </div>
@@ -48,7 +45,7 @@ class AccountMenuContent extends React.Component {
 
         <Button className="bodyCopy moreRowTop"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip'); this.state.toggleAccountMenu()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'wip'); this.context.toggleAccountMenu()}}>
               <div className='accountText'>
                 Export Account
               </div>
@@ -61,11 +58,11 @@ class AccountMenuContent extends React.Component {
         <Button className="bodyCopy moreRowBottom"
           content={
             <div className="moreButtonBottom" onClick={() => {
-              this.state.togglePage(this.props.page, 'accountSelect')
-              this.state.toggleAccountMenu()
-              var accounts = this.state.accounts
-              delete accounts[this.state.accountSelected] 
-              console.log(this.state.accountSelected)
+              this.context.togglePage(this.props.page, 'accountSelect')
+              this.context.toggleAccountMenu()
+              var accounts = this.context.accounts
+              delete accounts[this.context.accountSelected] 
+              console.log(this.context.accountSelected)
               console.log(accounts)
               this.props.BACKGROUND.storage.set({'accounts': accounts})
               // chrome.storage.local.set({'accounts': accounts}, function() {})

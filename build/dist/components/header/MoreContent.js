@@ -1,16 +1,14 @@
 import React from "../../../snowpack/pkg/react.js";
 import Button from "../Button.js";
+import AppContext from "../../utils/context.js";
 class MoreContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {
-      togglePage: props.togglePage,
-      toggleMore: props.toggleMore,
-      moreType: this.props.page == "accountSelect" ? "moreAccount" : "more"
-    };
+    this.state = {};
   }
   actionButtons = () => {
-    switch (this.props.page) {
+    switch (this.context.page) {
       case "accountSelect":
         return /* @__PURE__ */ React.createElement("div", null);
       default:
@@ -19,8 +17,8 @@ class MoreContent extends React.Component {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "moreButtonBottom",
             onClick: () => {
-              this.state.togglePage(this.props.page, "like");
-              this.state.toggleMore();
+              this.context.togglePage(this.context.page, "like");
+              this.context.toggleMore();
             }
           }, /* @__PURE__ */ React.createElement("img", {
             src: "dist/images/LikeOnly.svg",
@@ -36,8 +34,8 @@ class MoreContent extends React.Component {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "moreButtonBottom",
             onClick: () => {
-              this.state.togglePage(this.props.page, "buy");
-              this.state.toggleMore();
+              this.context.togglePage(this.context.page, "buy");
+              this.context.toggleMore();
             }
           }, /* @__PURE__ */ React.createElement("img", {
             src: "dist/images/BuyGrey.svg",
@@ -53,8 +51,8 @@ class MoreContent extends React.Component {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "moreButtonBottom",
             onClick: () => {
-              this.state.togglePage(this.props.page, "send");
-              this.state.toggleMore();
+              this.context.togglePage(this.context.page, "send");
+              this.context.toggleMore();
             }
           }, /* @__PURE__ */ React.createElement("img", {
             src: "dist/images/SendPlane.svg",
@@ -70,8 +68,8 @@ class MoreContent extends React.Component {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "moreButtonBottom",
             onClick: () => {
-              this.state.togglePage(this.props.page, "claim");
-              this.state.toggleMore();
+              this.context.togglePage(this.context.page, "claim");
+              this.context.toggleMore();
             }
           }, /* @__PURE__ */ React.createElement("img", {
             src: "dist/images/ClaimOnly.svg",
@@ -87,8 +85,8 @@ class MoreContent extends React.Component {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "moreButtonBottom",
             onClick: () => {
-              this.state.togglePage(this.props.page, "accountSelect");
-              this.state.toggleMore();
+              this.context.togglePage(this.context.page, "accountSelect");
+              this.context.toggleMore();
             }
           }, /* @__PURE__ */ React.createElement("img", {
             src: "dist/images/extension/popup/Arrows/Connection.svg",
@@ -103,16 +101,17 @@ class MoreContent extends React.Component {
     }
   };
   render() {
+    var moreType = this.context.page == "accountSelect" ? "moreAccount" : "more";
     return /* @__PURE__ */ React.createElement("div", {
-      className: this.state.moreType
+      className: moreType
     }, /* @__PURE__ */ React.createElement(Button, {
       className: "bodyLabel moreRow",
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "generate");
-          this.props.newAccount();
-          this.state.toggleMore();
+          this.context.togglePage(this.context.page, "generate");
+          this.context.newAccount();
+          this.context.toggleMore();
         }
       }, /* @__PURE__ */ React.createElement("img", {
         src: "dist/images/extension/popup/user_interface/Plus Square.svg",
@@ -128,8 +127,8 @@ class MoreContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "addAccount");
-          this.state.toggleMore();
+          this.context.togglePage(this.context.page, "addAccount");
+          this.context.toggleMore();
         }
       }, /* @__PURE__ */ React.createElement("img", {
         src: "dist/images/Download.svg",
@@ -145,8 +144,8 @@ class MoreContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleMore();
+          this.context.togglePage(this.context.page, "wip");
+          this.context.toggleMore();
         }
       }, /* @__PURE__ */ React.createElement("img", {
         src: "dist/images/extension/popup/Content/dialpad.svg",
@@ -162,8 +161,8 @@ class MoreContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleMore();
+          this.context.togglePage(this.context.page, "wip");
+          this.context.toggleMore();
         }
       }, /* @__PURE__ */ React.createElement("img", {
         src: "dist/images/extension/popup/Cloud and Web/server connection.svg",

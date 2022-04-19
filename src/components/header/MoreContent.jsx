@@ -1,18 +1,17 @@
 import React from 'react';
 import Button from '../Button'
+import AppContext from "../../utils/context";
 
 class MoreContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
-      togglePage: props.togglePage,
-      toggleMore: props.toggleMore,
-      moreType: (this.props.page == 'accountSelect') ? 'moreAccount' : 'more'
     }
   }
   
   actionButtons = () => {
-    switch(this.props.page) {
+    switch(this.context.page) {
       case "accountSelect":
         return <div></div>
       default:
@@ -20,7 +19,7 @@ class MoreContent extends React.Component {
           <div>
             <Button className="bodyLabel moreRowTop"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'like'); this.state.toggleMore()}}>
+                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'like'); this.context.toggleMore()}}>
                   <img 
                     src="dist/images/LikeOnly.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -36,7 +35,7 @@ class MoreContent extends React.Component {
 
             <Button className="bodyLabel moreRowTop"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'buy'); this.state.toggleMore()}}>
+                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'buy'); this.context.toggleMore()}}>
                   <img 
                     src="dist/images/BuyGrey.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -52,7 +51,7 @@ class MoreContent extends React.Component {
 
             <Button className="bodyLabel moreRowTop"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'send'); this.state.toggleMore()}}>
+                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'send'); this.context.toggleMore()}}>
                   <img 
                     src="dist/images/SendPlane.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -69,7 +68,7 @@ class MoreContent extends React.Component {
 
             <Button className="bodyLabel moreRowBottom"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'claim'); this.state.toggleMore()}}>
+                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'claim'); this.context.toggleMore()}}>
                   <img 
                     src="dist/images/ClaimOnly.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -86,7 +85,7 @@ class MoreContent extends React.Component {
         
         <Button className="bodyLabel moreRow"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'accountSelect'); this.state.toggleMore()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'accountSelect'); this.context.toggleMore()}}>
               <img 
                 src="dist/images/extension/popup/Arrows/Connection.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -106,12 +105,13 @@ class MoreContent extends React.Component {
 
 
   render() {
+    var moreType = (this.context.page == 'accountSelect') ? 'moreAccount' : 'more'
     return(
-      <div className={this.state.moreType}>
+      <div className={moreType}>
         <Button 
           className="bodyLabel moreRow"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'generate'); this.props.newAccount(); this.state.toggleMore()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'generate'); this.context.newAccount(); this.context.toggleMore()}}>
               <img 
                 src="dist/images/extension/popup/user_interface/Plus Square.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -127,7 +127,7 @@ class MoreContent extends React.Component {
         <Button 
           className="bodyLabel moreRow"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'addAccount'); this.state.toggleMore()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'addAccount'); this.context.toggleMore()}}>
               <img 
                 src="dist/images/Download.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -145,7 +145,7 @@ class MoreContent extends React.Component {
 
         <Button className="bodyLabel moreRowTop"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip'); this.state.toggleMore()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'wip'); this.context.toggleMore()}}>
               <img 
                 src="dist/images/extension/popup/Content/dialpad.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -161,7 +161,7 @@ class MoreContent extends React.Component {
 
         <Button className="bodyLabel moreRowBottom"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip'); this.state.toggleMore()}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'wip'); this.context.toggleMore()}}>
               <img 
                 src="dist/images/extension/popup/Cloud and Web/server connection.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 

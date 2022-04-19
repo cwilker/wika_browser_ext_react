@@ -8,10 +8,6 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: props.text,
-      toggleSearch: props.toggleSearch,
-      toggleMore: props.toggleMore,
-      toggleSettings: props.toggleSettings,
     }
   }
 
@@ -149,10 +145,10 @@ class Header extends React.Component {
           <this.cancleOrButtons 
             page={this.context.page}
             // togglePage={this.context.togglePage}
-            toggleSearch={this.state.toggleSearch}
-            toggleMore={this.state.toggleMore}
+            toggleSearch={this.context.toggleSearch}
+            toggleMore={this.context.toggleMore}
             homeToggle={this.homeToggle}
-            toggleSettings={this.state.toggleSettings}
+            toggleSettings={this.context.toggleSettings}
           />
       </div>
     )

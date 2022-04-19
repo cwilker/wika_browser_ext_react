@@ -1,19 +1,15 @@
 import React from "../../../snowpack/pkg/react.js";
 import Button from "../Button.js";
+import AppContext from "../../utils/context.js";
 class AccountMenuContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {
-      togglePage: props.togglePage,
-      toggleAccountMenu: props.toggleAccountMenu,
-      accounts: props.accounts,
-      selectAccount: props.selectAccount,
-      accountSelected: props.accountSelected
-    };
+    this.state = {};
   }
   disconnectAccount = () => {
-    this.props.selectAccount("");
-    this.state.togglePage(this.props.page, "accountSelect");
+    this.context.selectAccount("");
+    this.context.togglePage(this.props.page, "accountSelect");
   };
   render() {
     return /* @__PURE__ */ React.createElement("div", {
@@ -23,9 +19,9 @@ class AccountMenuContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "generate2");
-          this.props.toggleAddAccount(this.props.accounts[this.props.accountSelected]);
-          this.state.toggleAccountMenu();
+          this.context.togglePage(this.props.page, "generate2");
+          this.context.toggleAddAccount(this.context.accounts[this.context.accountSelected]);
+          this.context.toggleAccountMenu();
         }
       }, /* @__PURE__ */ React.createElement("div", {
         className: "accountText"
@@ -37,8 +33,8 @@ class AccountMenuContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleAccountMenu();
+          this.context.togglePage(this.props.page, "wip");
+          this.context.toggleAccountMenu();
         }
       }, /* @__PURE__ */ React.createElement("div", {
         className: "accountText"
@@ -50,8 +46,8 @@ class AccountMenuContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "wip");
-          this.state.toggleAccountMenu();
+          this.context.togglePage(this.props.page, "wip");
+          this.context.toggleAccountMenu();
         }
       }, /* @__PURE__ */ React.createElement("div", {
         className: "accountText"
@@ -63,11 +59,11 @@ class AccountMenuContent extends React.Component {
       content: /* @__PURE__ */ React.createElement("div", {
         className: "moreButtonBottom",
         onClick: () => {
-          this.state.togglePage(this.props.page, "accountSelect");
-          this.state.toggleAccountMenu();
-          var accounts = this.state.accounts;
-          delete accounts[this.state.accountSelected];
-          console.log(this.state.accountSelected);
+          this.context.togglePage(this.props.page, "accountSelect");
+          this.context.toggleAccountMenu();
+          var accounts = this.context.accounts;
+          delete accounts[this.context.accountSelected];
+          console.log(this.context.accountSelected);
           console.log(accounts);
           this.props.BACKGROUND.storage.set({accounts});
           this.disconnectAccount();

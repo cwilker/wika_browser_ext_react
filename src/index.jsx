@@ -235,57 +235,19 @@ class App extends React.Component {
             importAccountFromPhrase: this.importAccountFromPhrase,
             toggleAccountMenu: this.toggleAccountMenu,
             newAccount: this.newAccount,
+            toggleSearch: this.toggleSearch,
+            toggleMore: this.toggleMore,
+            toggleSettings: this.toggleSettings
          }}>
-          <Header 
-            toggleSearch={this.toggleSearch}
-            toggleMore={this.toggleMore}
-            toggleSettings={this.toggleSettings}
-          />
+          <Header />
           <MainContent />
           <MainButton />
+          {this.state.isSearchOpen && <SearchContent/>}
+          {this.state.isMoreOpen && <MoreContent/>}
+          {this.state.isAccountOpen && <AccountMenuContent />}
+          {this.state.isSettingsOpen && <SettingsContent/>}
          </AppContext.Provider>
         </div>
-        {this.state.isSearchOpen && <ContentContainer
-          content={<SearchContent togglePage={this.togglePage}/>}
-          togglePage={this.togglePage}
-        />}
-        {this.state.isMoreOpen && <ContentContainer
-          content={
-            <MoreContent
-              togglePage={this.togglePage} 
-              toggleMore={this.toggleMore}
-              toggleSettings={this.toggleSettings}
-              newAccount={this.newAccount}
-              page={this.state.page}
-            />
-          }
-          togglePage={this.togglePage}
-        />}
-        {this.state.isAccountOpen && <ContentContainer
-          content={
-            <AccountMenuContent 
-              BACKGROUND={BACKGROUND}
-              togglePage={this.togglePage} 
-              toggleAccountMenu={this.toggleAccountMenu}
-              accounts={this.state.accounts}
-              accountSelected={this.state.accountSelected}
-              toggleAddAccount={this.toggleAddAccount}
-              selectAccount={this.selectAccount}
-            />
-          }
-          togglePage={this.togglePage}
-        />}
-        {this.state.isSettingsOpen && <ContentContainer
-          content={
-            <SettingsContent
-              togglePage={this.togglePage} 
-              toggleMore={this.toggleMore}
-              toggleSettings={this.toggleSettings}
-              newAccount={this.newAccount}
-            />
-          }
-          togglePage={this.togglePage}
-        />}
       </div>
     )
   }

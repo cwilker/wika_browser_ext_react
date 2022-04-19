@@ -1,13 +1,11 @@
 import React from "../../snowpack/pkg/react.js";
 import Button from "./Button.js";
+import AppContext from "../utils/context.js";
 class MainButton extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {
-      togglePage: props.togglePage,
-      toggleAddAccount: props.toggleAddAccount,
-      addSelectAccount: props.addSelectAccount
-    };
+    this.state = {};
   }
   static getDerivedStateFromProps(props, state) {
     return {
@@ -15,11 +13,11 @@ class MainButton extends React.Component {
     };
   }
   disconnectAccount = () => {
-    this.props.selectAccount("");
-    this.state.togglePage(this.props.page, "accountSelect");
+    this.context.selectAccount("");
+    this.context.togglePage(this.context.page, "accountSelect");
   };
   render() {
-    switch (this.props.page) {
+    switch (this.context.page) {
       case "welcome":
         return /* @__PURE__ */ React.createElement("div", {
           style: {
@@ -29,7 +27,7 @@ class MainButton extends React.Component {
             width: "550px"
           }
         }, /* @__PURE__ */ React.createElement("div", {
-          onClick: () => this.state.togglePage(this.props.page, "setup")
+          onClick: () => this.context.togglePage(this.context.page, "setup")
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "bodyCopy",
@@ -54,7 +52,7 @@ class MainButton extends React.Component {
             width: "550px"
           }
         }, /* @__PURE__ */ React.createElement("div", {
-          onClick: () => this.state.togglePage(this.props.page, "account")
+          onClick: () => this.context.togglePage(this.context.page, "account")
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
             id: "asdf",
@@ -95,8 +93,8 @@ class MainButton extends React.Component {
           }
         }, /* @__PURE__ */ React.createElement("div", {
           onClick: () => {
-            this.state.togglePage(this.props.page, "generate");
-            this.props.newAccount();
+            this.context.togglePage(this.context.page, "generate");
+            this.context.newAccount();
           }
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
@@ -113,7 +111,7 @@ class MainButton extends React.Component {
             width: "275px"
           }
         }, /* @__PURE__ */ React.createElement("div", {
-          onClick: () => this.state.togglePage(this.props.page, "addAccount")
+          onClick: () => this.context.togglePage(this.context.page, "addAccount")
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "bodyCopy",
@@ -131,7 +129,7 @@ class MainButton extends React.Component {
           }
         }, /* @__PURE__ */ React.createElement("div", {
           onClick: () => {
-            this.state.togglePage(this.props.page, "generate2");
+            this.context.togglePage(this.context.page, "generate2");
           }
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
@@ -149,7 +147,7 @@ class MainButton extends React.Component {
           }
         }, /* @__PURE__ */ React.createElement("div", {
           onClick: () => {
-            this.state.togglePage(this.props.page, "generate2");
+            this.context.togglePage(this.context.page, "generate2");
           }
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
@@ -175,7 +173,7 @@ class MainButton extends React.Component {
           }
         }, /* @__PURE__ */ React.createElement("div", {
           onClick: () => {
-            this.state.togglePage(this.props.page, this.props.previousPage);
+            this.context.togglePage(this.context.page, this.context.previousPage);
           }
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
@@ -195,9 +193,9 @@ class MainButton extends React.Component {
           }
         }, /* @__PURE__ */ React.createElement("div", {
           onClick: () => {
-            this.state.togglePage(this.props.page, "account");
-            this.props.addSelectAccount(this.props.addAccount);
-            this.state.toggleAddAccount({accountName: "<Account Name>", address: "N/A"});
+            this.context.togglePage(this.context.page, "account");
+            this.context.addSelectAccount(this.context.addAccount);
+            this.context.toggleAddAccount({accountName: "<Account Name>", address: "N/A"});
           }
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
@@ -224,7 +222,7 @@ class MainButton extends React.Component {
             width: "550px"
           }
         }, /* @__PURE__ */ React.createElement("div", {
-          onClick: () => this.state.togglePage(this.props.page, "welcome")
+          onClick: () => this.context.togglePage(this.context.page, "welcome")
         }, /* @__PURE__ */ React.createElement(Button, {
           content: /* @__PURE__ */ React.createElement("div", {
             className: "bodyCopy",

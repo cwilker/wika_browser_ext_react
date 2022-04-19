@@ -1,12 +1,14 @@
 import React from 'react';
-import Button from '../Button'
+import Button from '../Button';
+import AppContext from "../../utils/context";
 
 class SettingsContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
-      togglePage: props.togglePage,
-      toggleMore: props.toggleMore
+      // togglePage: props.togglePage,
+      // toggleMore: props.toggleMore
     }
   }
   
@@ -35,7 +37,7 @@ class SettingsContent extends React.Component {
 
         <Button className="bodyLabel moreRowTop"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip')}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'wip')}}>
               <img 
                 src="dist/images/keyhole.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -51,7 +53,7 @@ class SettingsContent extends React.Component {
 
         <Button className="bodyLabel moreRowBottom"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.state.togglePage(this.props.page, 'wip')}}>
+            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'wip')}}>
               <img 
                 src="dist/images/window.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 

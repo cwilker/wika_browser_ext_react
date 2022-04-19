@@ -3,7 +3,9 @@ import Identicon from "../../snowpack/pkg/react-identicons.js";
 import Button from "./Button.js";
 import MainFunctions from "./MainFunctions.js";
 import {copyToClipboard} from "../utils/misc.js";
+import AppContext from "../utils/context.js";
 class YourAccount extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -24,14 +26,14 @@ class YourAccount extends React.Component {
     };
   }
   contentInjector() {
-    if (this.state.content) {
+    if (this.props.content) {
       return /* @__PURE__ */ React.createElement("div", {
         style: {paddingTop: "100px", paddingRight: "18px", paddingLeft: "18px"}
       }, this.props.content);
     }
   }
   renderSelectButtonOrOptions() {
-    switch (this.props.page) {
+    switch (this.context.page) {
       case "accountSelect":
         return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("div", {
           style: {position: "absolute", top: "20px", left: "450px"}
@@ -54,7 +56,7 @@ class YourAccount extends React.Component {
           src: "dist/images/extension/Vector 2.svg"
         }), /* @__PURE__ */ React.createElement("img", {
           title: "Account Settings",
-          onClick: () => this.props.toggleAccountMenu(),
+          onClick: () => this.context.toggleAccountMenu(),
           style: {position: "absolute", top: "18px", left: "468px", cursor: "pointer"},
           src: "dist/images/extension/User Interface/Menu.svg"
         }), /* @__PURE__ */ React.createElement("div", {
@@ -86,23 +88,13 @@ class YourAccount extends React.Component {
   }
 }
 class MainContent extends React.Component {
+  static contextType = AppContext;
   constructor(props) {
     super(props);
-    this.state = {
-      toggleAddAccount: props.toggleAddAccount,
-      page: props.page,
-      togglePage: props.togglePage,
-      selectAccount: props.selectAccount
-    };
+    this.state = {};
   }
   static getDerivedStateFromProps(props, state) {
-    return {
-      page: props.page,
-      addAccount: props.addAccount,
-      accounts: props.accounts,
-      accountSelected: props.accountSelected,
-      randomAccount: props.randomAccount
-    };
+    return {};
   }
   copyElement = (element) => () => {
     copyToClipboard(element);
@@ -110,8 +102,8 @@ class MainContent extends React.Component {
   setAccount = (phrase) => {
     if (phrase.split(" ").length % 12 === 0) {
       try {
-        var addAccount = this.props.importAccountFromPhrase(phrase);
-        this.state.toggleAddAccount(addAccount);
+        var addAccount = this.context.importAccountFromPhrase(phrase);
+        this.context.toggleAddAccount(addAccount);
       } catch (error) {
         alert(error);
       }
@@ -120,7 +112,7 @@ class MainContent extends React.Component {
     }
   };
   render() {
-    switch (this.props.page) {
+    switch (this.context.page) {
       case "welcome":
         return /* @__PURE__ */ React.createElement("div", {
           className: "mainContent"
@@ -151,9 +143,9 @@ class MainContent extends React.Component {
         }, /* @__PURE__ */ React.createElement("div", {
           className: "mainInside"
         }, /* @__PURE__ */ React.createElement(YourAccount, {
-          toggleAccountMenu: this.props.toggleAccountMenu,
-          account: this.state.addAccount,
-          page: this.props.page
+          toggleAccountMenu: this.context.toggleAccountMenu,
+          account: this.context.addAccount,
+          page: this.context.page
         }), /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: 25}
         }, /* @__PURE__ */ React.createElement("div", {
@@ -188,9 +180,9 @@ class MainContent extends React.Component {
         }, /* @__PURE__ */ React.createElement("div", {
           className: "mainInside"
         }, /* @__PURE__ */ React.createElement(YourAccount, {
-          toggleAccountMenu: this.props.toggleAccountMenu,
-          account: this.state.addAccount,
-          page: this.props.page
+          toggleAccountMenu: this.context.toggleAccountMenu,
+          account: this.context.addAccount,
+          page: this.context.page
         }), /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: 25}
         }, /* @__PURE__ */ React.createElement("div", {
@@ -198,7 +190,7 @@ class MainContent extends React.Component {
         }, "GENERATED 12-WORD MNEMONIC SEED"), /* @__PURE__ */ React.createElement("textarea", {
           id: "seed",
           className: "accountBox",
-          defaultValue: this.state.addAccount.phrase,
+          defaultValue: this.context.addAccount.phrase,
           style: {color: "#A77121", width: "505px"}
         }), /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: "40px", cursor: "pointer"},
@@ -224,9 +216,9 @@ class MainContent extends React.Component {
         }, /* @__PURE__ */ React.createElement("div", {
           className: "mainInside"
         }, /* @__PURE__ */ React.createElement(YourAccount, {
-          toggleAccountMenu: this.props.toggleAccountMenu,
-          account: this.state.addAccount,
-          page: this.props.page
+          toggleAccountMenu: this.context.toggleAccountMenu,
+          account: this.context.addAccount,
+          page: this.context.page
         }), /* @__PURE__ */ React.createElement("form", null, /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: 25}
         }, /* @__PURE__ */ React.createElement("div", {
@@ -238,7 +230,7 @@ class MainContent extends React.Component {
           placeholder: "<Account Name>",
           autoComplete: "username",
           onChange: () => {
-            this.state.addAccount.accountName = document.getElementById("accountName").value;
+            this.context.addAccount.accountName = document.getElementById("accountName").value;
           }
         })), /* @__PURE__ */ React.createElement("div", {
           style: {paddingTop: 25}
@@ -262,21 +254,21 @@ class MainContent extends React.Component {
           autoComplete: "new-password"
         })))));
       case "accountSelect":
-        let accountArray = Object.values(this.state.accounts);
-        let accountKeys = Object.keys(this.state.accounts);
+        let accountArray = Object.values(this.context.accounts);
+        let accountKeys = Object.keys(this.context.accounts);
         const accountInfo = accountArray.map((account, i) => {
           return /* @__PURE__ */ React.createElement("div", {
             key: i,
             style: {paddingBottom: "20px"},
             onClick: () => {
-              this.state.togglePage(this.props.page, "account");
-              this.props.selectAccount(accountKeys[i]);
+              this.context.togglePage(this.context.page, "account");
+              this.context.selectAccount(accountKeys[i]);
             }
           }, /* @__PURE__ */ React.createElement(Button, {
             content: /* @__PURE__ */ React.createElement(YourAccount, {
-              toggleAccountMenu: this.props.toggleAccountMenu,
+              toggleAccountMenu: this.context.toggleAccountMenu,
               account: accountArray[i],
-              page: this.props.page
+              page: this.context.page
             }),
             className: "a",
             backgroundColor: "white",
@@ -304,15 +296,15 @@ class MainContent extends React.Component {
         }, /* @__PURE__ */ React.createElement("div", {
           className: "mainInside"
         }, /* @__PURE__ */ React.createElement(YourAccount, {
-          toggleAccountMenu: this.props.toggleAccountMenu,
-          page: this.props.page,
-          account: this.props.accounts[this.props.accountSelected],
+          toggleAccountMenu: this.context.toggleAccountMenu,
+          page: this.context.page,
+          account: this.context.accounts[this.context.accountSelected],
           style: {height: "430px"},
           content: /* @__PURE__ */ React.createElement(MainFunctions, {
-            page: this.props.page,
-            accounts: this.props.accounts,
-            accountSelected: this.props.accountSelected,
-            togglePage: this.state.togglePage
+            page: this.context.page,
+            accounts: this.context.accounts,
+            accountSelected: this.context.accountSelected,
+            togglePage: this.context.togglePage
           })
         })));
       default:
