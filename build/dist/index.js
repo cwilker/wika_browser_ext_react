@@ -18,15 +18,15 @@ import Utf8 from "../snowpack/pkg/crypto-js/enc-utf8.js";
 import StorageExtension from "./utils/storageExtension.js";
 import StorageWeb from "./utils/storageWeb.js";
 const StorageManagment = {
-  extension: new StorageExtension(),
-  web: new StorageWeb()
+  extension: StorageExtension,
+  web: StorageWeb
 };
 const url = window.location.href;
 var env = url.split(":")[0] == "chrome-extension" ? "extension" : "web";
 const BACKGROUND = {
   cryptoReady: false,
   network: null,
-  storage: StorageManagment[env]
+  storage: new StorageManagment[env]()
 };
 const encryptWithAES = (text, passphrase) => {
   return AES.encrypt(text, passphrase).toString();
