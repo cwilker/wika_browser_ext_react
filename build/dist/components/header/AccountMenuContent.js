@@ -65,7 +65,7 @@ class AccountMenuContent extends React.Component {
           delete accounts[this.context.accountSelected];
           console.log(this.context.accountSelected);
           console.log(accounts);
-          this.props.BACKGROUND.storage.set({accounts});
+          this.context.BACKGROUND.storage.set({accounts});
           this.disconnectAccount();
         }
       }, /* @__PURE__ */ React.createElement("div", {

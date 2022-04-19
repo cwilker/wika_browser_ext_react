@@ -13,13 +13,20 @@ import MainContent from "./components/MainContent.js";
 import WikaNetwork from "./network.js";
 import {delay} from "../snowpack/pkg/rxjs.js";
 import AppContext from "./utils/context.js";
-import StorageManagment from "./utils/storage.js";
 import AES from "../snowpack/pkg/crypto-js/aes.js";
 import Utf8 from "../snowpack/pkg/crypto-js/enc-utf8.js";
+import StorageExtension from "./utils/storageExtension.js";
+import StorageWeb from "./utils/storageWeb.js";
+const StorageManagment = {
+  extension: new StorageExtension(),
+  web: new StorageWeb()
+};
+const url = window.location.href;
+var env = url.split(":")[0] == "chrome-extension" ? "extension" : "web";
 const BACKGROUND = {
   cryptoReady: false,
   network: null,
-  storage: null
+  storage: StorageManagment[env]
 };
 const encryptWithAES = (text, passphrase) => {
   return AES.encrypt(text, passphrase).toString();
@@ -54,14 +61,6 @@ const generateAddAccount = () => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.toggleSearch = this.toggleSearch.bind(this);
-    this.toggleMore = this.toggleMore.bind(this);
-    this.toggleAccountMenu = this.toggleAccountMenu.bind(this);
-    this.togglePage = this.togglePage.bind(this);
-    this.toggleAddAccount = this.toggleAddAccount.bind(this);
-    this.newAccount = this.newAccount.bind(this);
-    this.addSelectAccount = this.addSelectAccount.bind(this);
-    this.selectAccount = this.selectAccount.bind(this);
     this.state = {
       header: "Welcome to Wika!",
       isSearchOpen: false,
@@ -82,7 +81,6 @@ class App extends React.Component {
       BACKGROUND.network = network;
       console.log("connected");
     });
-    BACKGROUND.storage = new StorageManagment();
     console.log("componentDidMount1");
     const accounts = await BACKGROUND.storage.get("accounts");
     const accountSelected = await BACKGROUND.storage.get("accountSelected");
@@ -214,7 +212,8 @@ class App extends React.Component {
         newAccount: this.newAccount,
         toggleSearch: this.toggleSearch,
         toggleMore: this.toggleMore,
-        toggleSettings: this.toggleSettings
+        toggleSettings: this.toggleSettings,
+        BACKGROUND
       }
     }, /* @__PURE__ */ React.createElement(Header, null), /* @__PURE__ */ React.createElement(MainContent, null), /* @__PURE__ */ React.createElement(MainButton, null), this.state.isSearchOpen && /* @__PURE__ */ React.createElement(SearchContent, null), this.state.isMoreOpen && /* @__PURE__ */ React.createElement(MoreContent, null), this.state.isAccountOpen && /* @__PURE__ */ React.createElement(AccountMenuContent, null), this.state.isSettingsOpen && /* @__PURE__ */ React.createElement(SettingsContent, null))));
   };

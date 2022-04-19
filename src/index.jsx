@@ -14,15 +14,30 @@ import WikaNetwork from './network';
 import { delay } from 'rxjs';
 
 import AppContext from './utils/context' ;
-import StorageManagment from './utils/storage'
+// import StorageManagment from './utils/storage'
 import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
 
+import StorageExtension from './utils/storageExtension'
+import StorageWeb from './utils/storageWeb'
+
+
+
+const StorageManagment = {
+  'extension':new StorageExtension(),
+  'web': new StorageWeb()
+}
+
+
+
+const url = window.location.href
+var env = (url.split(':')[0] == 'chrome-extension') ? 'extension' : 'web'
+
 const BACKGROUND = {
-  cryptoReady: false,
-  network: null,
-  storage: null
+  'cryptoReady': false,
+  'network': null,
+  'storage': StorageManagment[env]
 }
 
  
@@ -86,7 +101,7 @@ class App extends React.Component {
         BACKGROUND.network = network ;
         console.log('connected') ;
     }) ;
-    BACKGROUND.storage = new StorageManagment();
+    // BACKGROUND.storage = new StorageManagment();
     console.log('componentDidMount1')
     const accounts = await BACKGROUND.storage.get('accounts')
     const accountSelected = await BACKGROUND.storage.get('accountSelected')
@@ -229,14 +244,15 @@ class App extends React.Component {
             newAccount: this.newAccount,
             toggleSearch: this.toggleSearch,
             toggleMore: this.toggleMore,
-            toggleSettings: this.toggleSettings
+            toggleSettings: this.toggleSettings,
+            BACKGROUND: BACKGROUND
          }}>
           <Header />
           <MainContent />
           <MainButton />
           {this.state.isSearchOpen && <SearchContent/>}
           {this.state.isMoreOpen && <MoreContent/>}
-          {this.state.isAccountOpen && <AccountMenuContent />}
+          {this.state.isAccountOpen && <AccountMenuContent/>}
           {this.state.isSettingsOpen && <SettingsContent/>}
          </AppContext.Provider>
         </div>
