@@ -65,14 +65,6 @@ const generateAddAccount = () => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.toggleSearch = this.toggleSearch.bind(this)
-    this.toggleMore = this.toggleMore.bind(this)
-    this.toggleAccountMenu = this.toggleAccountMenu.bind(this)
-    this.togglePage = this.togglePage.bind(this)
-    this.toggleAddAccount = this.toggleAddAccount.bind(this)
-    this.newAccount = this.newAccount.bind(this)
-    this.addSelectAccount = this.addSelectAccount.bind(this)
-    this.selectAccount = this.selectAccount.bind(this)
     this.state = {
       header: "Welcome to Wika!",
       isSearchOpen: false,
