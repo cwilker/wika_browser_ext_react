@@ -5,11 +5,11 @@ import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
 import BACKGROUND from '../utils/global';
+import {encryptWithAES, decryptWithAES, bytesToHex, importAccount, generateAddAccount} from '../utils/misc';
 import '../css/index.css';
 import {parseError} from "../utils/misc";
 import Header from "./header/Header";
 import MainButton from "./MainButton"
-import ContentContainer from './ContentContainer';
 import MoreContent from './header/MoreContent'
 import SearchContent from './header/searchContent';
 import AccountMenuContent from './header/AccountMenuContent';
@@ -21,43 +21,6 @@ import AppContext from '../utils/context' ;
 
 
 
-
- 
-const encryptWithAES = (text, passphrase) => {
-  return AES.encrypt(text, passphrase).toString();
-};
-
-const decryptWithAES = (ciphertext, passphrase) => {
-  const bytes = AES.decrypt(ciphertext, passphrase);
-  const originalText = bytes.toString(Utf8);
-  return originalText;
-};
-
-
-function bytesToHex(byteArray) {
-  var s = '0x';
-  byteArray.forEach(function (byte) {
-      s += ('0' + (byte & 0xFF).toString(16)).slice(-2);
-  });
-  return s;
-}
-
-const importAccount = (phrase) => {
-  let keyring = new polkadotKeyring.Keyring({ type: 'sr25519' });
-  let newPair = keyring.addFromUri(phrase) ;
-  let account = {
-      address: newPair.address,
-      addressRaw: bytesToHex(newPair.addressRaw),
-      phrase: phrase,
-      accountName: '<Account Name>'
-  } ;
-  return account ;
-}
-
-const generateAddAccount = () => {
-  let phrase = polkadotUtilCrypto.mnemonicGenerate(12);
-  return importAccount(phrase) ;
-}
 
 class MainApp extends React.Component {
   constructor(props) {

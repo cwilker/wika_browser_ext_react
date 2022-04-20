@@ -1,3 +1,7 @@
+import AES from 'crypto-js/aes';
+import Utf8 from 'crypto-js/enc-utf8';
+
+
 const BALANCE_UNIT = 1000000000000;
 const WIKA_TO_USD = 0.02 ;
 
@@ -119,5 +123,57 @@ function parseError(result) {
     }
 }
 
+function encryptWithAES(text, passphrase)  {
+  return AES.encrypt(text, passphrase).toString();
+};
 
-export {copyToClipboard, convertToWika, formatWika, wikaToUsd, formatUsd, shortenText, hexToBytes, bytesToString, parseError} ;
+function decryptWithAES(ciphertext, passphrase) {
+  const bytes = AES.decrypt(ciphertext, passphrase);
+  const originalText = bytes.toString(Utf8);
+  return originalText;
+};
+
+
+function bytesToHex(byteArray) {
+  var s = '0x';
+  byteArray.forEach(function (byte) {
+      s += ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  });
+  return s;
+}
+
+function importAccount(phrase) {
+  let keyring = new polkadotKeyring.Keyring({ type: 'sr25519' });
+  let newPair = keyring.addFromUri(phrase) ;
+  let account = {
+      address: newPair.address,
+      addressRaw: bytesToHex(newPair.addressRaw),
+      phrase: phrase,
+      accountName: '<Account Name>'
+  } ;
+  return account ;
+}
+
+function generateAddAccount() {
+  let phrase = polkadotUtilCrypto.mnemonicGenerate(12);
+  return importAccount(phrase) ;
+}
+
+export {
+    copyToClipboard,
+    convertToWika,
+    formatWika,
+    wikaToUsd,
+    formatUsd,
+    shortenText,
+    hexToBytes,
+    bytesToString,
+    parseError,
+    encryptWithAES,
+    decryptWithAES,
+    bytesToHex,
+    importAccount,
+    generateAddAccount
+} ;
+
+
