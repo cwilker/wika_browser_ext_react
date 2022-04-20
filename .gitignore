@@ -4,6 +4,9 @@
 # The cache for chain data in container
 .local
 
+# exclude build
+/build
+
 # exclude PyCharm metadata
 .idea
 
