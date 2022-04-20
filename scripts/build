@@ -6,7 +6,7 @@ cp node_modules/@polkadot/util-crypto/bundle-polkadot-util-crypto.js src/polkado
 cp node_modules/@polkadot/util/bundle-polkadot-util.js src/polkadot
 snowpack build
 cp manifest.json build
-cd widget_react
-node scripts/build.js
-cd ..
-cp -R widget_react/build build/widget
+# cd widget_react
+# node scripts/build.js
+# cd ..
+# cp -R widget_react/build build/widget
