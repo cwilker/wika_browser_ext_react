@@ -147,11 +147,23 @@ font-size: 13px;
 }
 
 /* account style */
+.seedBox {
+  position: relative;
+  /* top: 30%; */
+  padding: 10px;
+  height: 40px;
+  background: #FFFFFF;
+  outline: solid;
+  outline-color: #DFE1E5;
+  color:#A77121;
+  width: 489px;
+}
 
 .accountBox {
   position: relative;
-  top: 30%;
-  height: 70px;
+  /* top: 30%; */
+  padding: 20px;
+  height: 40px;
   background: #FFFFFF;
   outline: solid;
   outline-color: #DFE1E5;
