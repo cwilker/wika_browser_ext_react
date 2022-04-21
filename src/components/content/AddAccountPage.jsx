@@ -14,7 +14,7 @@ const AddAccountPage = (context, copyElement, setAccount) => {
           </div>
           <div>
             <textarea id='importSeed' defaultValue=''
-              type='text' className='mainText accountBox' style={{height: '70px', color:'#A77121'}}
+              type='text' className='seedBox' 
             />
           </div>
           <div 
@@ -33,7 +33,7 @@ const AddAccountPage = (context, copyElement, setAccount) => {
               }
             />
           </div>
-          <div  style={{paddingTop:'50px', cursor: 'pointer'}}
+          <div  style={{paddingTop:'20px', cursor: 'pointer'}}
             onClick={copyElement('importSeed')}
           >
             <img style={{float:'left', position:'relative', top:'-10px', paddingRight:'10px', cursor:'pointer'}} src='dist/images/extension/Outline/Files/Copy.svg'></img>
