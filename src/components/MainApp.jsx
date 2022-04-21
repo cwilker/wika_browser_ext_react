@@ -19,9 +19,6 @@ import WikaNetwork from '../utils/network';
 import AppContext from '../utils/context' ;
 
 
-
-
-
 class MainApp extends React.Component {
   constructor(props) {
     super(props);
