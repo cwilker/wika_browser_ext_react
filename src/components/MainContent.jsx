@@ -1,9 +1,6 @@
 import React from 'react';
-// import Identicon from 'react-identicons';
-import Button from './Button';
 import {copyToClipboard} from "./../utils/misc";
 import AppContext from "../utils/context";
-import YourAccount from "./content/Account";
 import WelcomePage from "./content/WelcomePage"
 import SetupPage from "./content/SetupPage"
 import AddAccountPage from "./content/AddAccountPage"
