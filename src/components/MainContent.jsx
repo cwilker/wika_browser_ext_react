@@ -1,5 +1,4 @@
 import React from 'react';
-import {copyToClipboard} from "./../utils/misc";
 import AppContext from "../utils/context";
 import WelcomePage from "./content/WelcomePage"
 import SetupPage from "./content/SetupPage"
@@ -23,38 +22,20 @@ class MainContent extends React.Component {
     }
   }
 
-  copyElement = (element) => () => {
-    copyToClipboard(element) ;
-  }
-
-  setAccount = (phrase) => {
-    if (phrase.split(' ').length % 12 === 0){
-        try {
-          var addAccount = this.context.importAccountFromPhrase(phrase);
-          this.context.toggleAddAccount(addAccount)
-        } catch (error) {
-          alert(error);
-        }
-      }
-    else {
-      alert('phrase must be 12 or 24 words long')
-    }
-  }
-
   render() {
     switch(this.context.page) {
       case 'welcome':
-        return(WelcomePage());
+        return(<WelcomePage />);
       case 'setup':
-        return(SetupPage());
+        return(<SetupPage />);
       case 'addAccount':
-        return(AddAccountPage(this.context, this.copyElement, this.setAccount));
+        return(<AddAccountPage />)
       case 'generate':
-        return(GenerateAccountPage(this.context, this.copyElement));
+        return(<GenerateAccountPage/>)
       case 'generate2': 
-        return(GenerateAccountPage2(this.context));
+        return(<GenerateAccountPage2/>)
       case 'accountSelect':
-        return(AccountSelectPage(this.context));
+        return(<AccountSelectPage/>)
       case 'account':
       case 'like':
       case 'like2':
@@ -66,7 +47,7 @@ class MainContent extends React.Component {
       case 'claim':
       case 'claim2':
       case 'claim3':
-        return(AccountSelectedPage(this.context))
+        return(<AccountSelectedPage/>)
       default:
         return (
           <div className='mainContent heading1'>

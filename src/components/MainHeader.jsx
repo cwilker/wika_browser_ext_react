@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AppContext from "../../utils/context";
+import AppContext from "../utils/context";
 
 class Header extends React.Component {
   static contextType = AppContext;
@@ -144,7 +144,6 @@ class Header extends React.Component {
         </div>
           <this.cancleOrButtons 
             page={this.context.page}
-            // togglePage={this.context.togglePage}
             toggleSearch={this.context.toggleSearch}
             toggleMore={this.context.toggleMore}
             homeToggle={this.homeToggle}

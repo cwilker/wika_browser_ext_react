@@ -8,16 +8,13 @@ import BACKGROUND from '../utils/global';
 import {encryptWithAES, decryptWithAES, bytesToHex, importAccount, generateAddAccount} from '../utils/misc';
 import '../css/index.css';
 import {parseError} from "../utils/misc";
-import Header from "./header/Header";
-import MainButton from "./MainButton"
-import MoreContent from './header/MoreContent'
-import SearchContent from './header/searchContent';
-import AccountMenuContent from './header/AccountMenuContent';
-import SettingsContent  from './header/SettingsContent';
-import MainContent from './MainContent';
+import MoreContent from './menuPopups/MoreContent'
+import SearchContent from './menuPopups/searchContent';
+import AccountMenuContent from './menuPopups/AccountMenuContent';
+import SettingsContent  from './menuPopups/SettingsContent';
 import WikaNetwork from '../utils/network';
 import AppContext from '../utils/context' ;
-
+import MainPage from './MainPage'
 
 class MainApp extends React.Component {
   constructor(props) {
@@ -28,7 +25,7 @@ class MainApp extends React.Component {
       isMoreOpen: false,
       isSettingsOpen: false,
       isAccountOpen: false,
-      addAccount: {},
+      addAccount: {accountName:'<Account Name>', address:'N/A'},
       previousPage: '',
       accounts: {},
       accountSelected: '',
@@ -64,6 +61,10 @@ class MainApp extends React.Component {
 
   importAccountFromPhrase = (phrase) => {
     return importAccount(phrase)
+  }
+
+  copyElement = (element) => () => {
+    copyToClipboard(element) ;
   }
 
   toggleSearch = () => {
@@ -151,9 +152,28 @@ class MainApp extends React.Component {
     BACKGROUND.storage.set({'accounts': accounts, 'accountSelected': newAccountKey})
   }
 
+  setAccount = (phrase) => {
+    if (phrase.split(' ').length % 12 === 0){
+        try {
+          var addAccount = this.importAccountFromPhrase(phrase);
+          this.toggleAddAccount(addAccount)
+        } catch (error) {
+          alert(error);
+        }
+      }
+    else {
+      alert('phrase must be 12 or 24 words long')
+    }
+  }
+
   selectAccount = (accountKey) => {
     BACKGROUND.storage.set({'accountSelected': accountKey})
     this.setState({accountSelected:accountKey})
+  }
+
+  disconnectAccount = () => {
+    this.selectAccount('')
+    this.togglePage(this.state.page, 'accountSelect')
   }
 
   closeMenu = () => {
@@ -187,11 +207,12 @@ class MainApp extends React.Component {
             toggleSearch: this.toggleSearch,
             toggleMore: this.toggleMore,
             toggleSettings: this.toggleSettings,
+            copyElement: this.copyElement,
+            setAccount: this.setAccount,
+            disconnectAccount: this.disconnectAccount,
             BACKGROUND: BACKGROUND
          }}>
-          <Header />
-          <MainContent />
-          <MainButton />
+          <MainPage />
           {this.state.isSearchOpen && <SearchContent/>}
           {this.state.isMoreOpen && <MoreContent/>}
           {this.state.isAccountOpen && <AccountMenuContent/>}
