@@ -49,4 +49,3 @@ class GenerateAccountPage2 extends React.Component {
 }
 
 export default GenerateAccountPage2;
-
