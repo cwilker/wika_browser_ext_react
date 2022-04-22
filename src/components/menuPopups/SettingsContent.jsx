@@ -7,8 +7,6 @@ class SettingsContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // togglePage: props.togglePage,
-      // toggleMore: props.toggleMore
     }
   }
   
