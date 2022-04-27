@@ -14,4 +14,8 @@
 /react/node_modules
 /node_modules
 
+# exlude node stuff
+./yarn.lock
+./package-lock.json
+
 

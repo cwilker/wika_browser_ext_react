@@ -1,31 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Main} from '../styles/contentStyle'
 
 function WelcomePage() {
   return(
-    <Wrapper>
-      <div className='main'>
-        <img className='welcomeimg' src="dist/images/gettingStarted.png"></img>
-      </div>
-    </Wrapper>
+    <Main>
+      <CenterImg>
+        <StartImg className='welcomeimg' src="dist/images/gettingStarted.png"></StartImg>
+      </CenterImg>
+    </Main>
   )
 }
 
-const Wrapper = styled.div`
-  .main {
-    position: relative;
-    background: #F9F9F9;
-    height: 465px;
-    width: 550px;
-    outline: solid;
-    outline-color: #DFE1E5;
-  }
-  .welcomeimg{
-    position: relative;
-    left: 6%;
-    top: 7%;
-    height: 260px;
-  }
+const CenterImg = styled.div`
+  flex:1;
+  padding: 20px;
+  padding-bottom: 90px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 `
-
+const StartImg = styled.img`
+  flex:1;
+  max-width:100%;
+  max-height:100%;
+`
 export default WelcomePage;

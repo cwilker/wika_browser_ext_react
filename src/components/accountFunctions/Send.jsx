@@ -17,8 +17,7 @@ class Send extends React.Component {
   dependentSend (sendAddresSelected) {
     if (sendAddresSelected) {
       return (
-        <div style={{display: 'inline-block',  paddingTop:'5px'}}
-          onClick={() => this.state.togglePage(this.props.page, 'send2')}>
+        <div style={{display: 'inline-block',  paddingTop:'5px'}}>
           <Button className='mainText bodyCopy' 
             style={{width: '84px', outlineColor: '#4BA520'}}
             content={
@@ -28,6 +27,7 @@ class Send extends React.Component {
             }
             backgroundColor='#4BA520'
             backgroundColorhover='#26620A'
+            onClick={() => this.state.togglePage(this.props.page, 'send2')}
             />
         </div>
       )
@@ -71,8 +71,7 @@ class Send extends React.Component {
               placeholder="address" onChange={() => this.setState({sendAddress:document.getElementById('sendAddress').value})}
             />
           </div>
-          <div style={{display: 'inline-block', paddingTop:'5px'}}
-            onClick={() => this.setState({sendAddresSelected:true})}>
+          <div style={{display: 'inline-block', paddingTop:'5px'}}>
             <Button className='mainText bodyCopy' 
               style={{ float: 'left', width: '74px', outlineColor: '#4493BD'}}
               content={
@@ -80,6 +79,7 @@ class Send extends React.Component {
                   {(this.state.sendAddresSelected)? "clear": "Lookup URL status"}
                 </div>
               }
+              onClick={() => this.setState({sendAddresSelected:true})}
               />
           </div>
         </div>

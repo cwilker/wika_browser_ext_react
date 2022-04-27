@@ -1,6 +1,8 @@
 import React from "react";
 import AppContext from "../../utils/context";
 import YourAccount from "./Account";
+import styled from 'styled-components';
+import {MainLabel, BodyLabel} from '../styles/contentStyle';
 
 class GenerateAccountPage2 extends React.Component {
   static contextType = AppContext;
@@ -11,42 +13,60 @@ class GenerateAccountPage2 extends React.Component {
   }
 
   render () {
-    return (        
-      <div className='mainContent bodyLabel'>
-        <div className='mainInside' >
+    return (   
+      <GenAccount>
+        <Container>
           <YourAccount  toggleAccountMenu={this.context.toggleAccountMenu} account={this.context.addAccount}  page={this.context.page} />
-          <form>
-            <div style={{paddingTop:25}}>
-              <div style={{padding:5}}>
+          <FormStyled>
+            <FormRow>
+              <div>
                 ACCOUNT NAME
               </div>
-              <input 
-                id='accountName' type='text' className='mainText' placeholder='<Account Name>' autoComplete='username'
+              <MainText 
+                id='accountName' type='text' placeholder='<Account Name>' autoComplete='username'
                 onChange={() => {this.context.addAccount.accountName = document.getElementById('accountName').value}}
               />
-            </div>
-            <div style={{paddingTop:25}}>
-              <div style={{padding:5}}>
+            </FormRow>
+            <FormRow>
+              <div>
                 A NEW PASSWORD FOR YOUR ACCOUNT
               </div>
-              <input 
-                id='password' type='password' className='mainText' placeholder='<your password>' autoComplete='new-password'
-              />
-            </div>
-            <div style={{paddingTop:25}}>
-              <div style={{padding:5}}>
+              <MainText id='password' type='password' placeholder='<your password>' autoComplete='new-password'/>
+            </FormRow>
+            <FormRow>
+              <div>
                 CONFIRM PASSWORD
               </div>
-              <input 
-                id='confirmPassword' type='password' className='mainText' placeholder='<your password>' autoComplete='new-password'
-              />
-            </div>
-          </form>
-        </div>
-      </div>
+              <MainText id='confirmPassword' type='password' placeholder='<your password>' autoComplete='new-password'/>
+            </FormRow>
+          </FormStyled>
+        </Container>
+      </GenAccount>     
     )
   }
 }
+
+const GenAccount = styled(MainLabel)`
+  flex-direction: column;
+`
+const Container = styled.div`
+  padding:20px;
+`
+const MainText = styled.input`
+  border: none;
+  position: relative;
+  height: 30px;
+  width: 100%;
+  border-radius: 2px;
+  outline: solid;
+  outline-color: #DFE1E5;
+`
+const FormStyled = styled.form`
+  margin-top: 30px;
+`
+const FormRow = styled.div`
+  margin-bottom: 20px;
+`
 
 export default GenerateAccountPage2;
 

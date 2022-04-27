@@ -1,8 +1,11 @@
 import React from 'react';
+import AppContext from "../../utils/context";
+import styled from 'styled-components';
+import {MainHeader} from '../styles/headerStyle.jsx'
+import {Heading1, BodyCopy, BodyLabel} from '../styles/contentStyle';
 
-import AppContext from "../utils/context";
 
-class Header extends React.Component {
+class SetupHeader extends React.Component {
   static contextType = AppContext;
   
   constructor(props) {
@@ -70,78 +73,52 @@ class Header extends React.Component {
       case 'generate2':
       case 'addAccount':
         return (
-          <div 
-            onClick={() => props.homeToggle()}
-            className='bodyCopy' 
-            style={{
-              position: 'absolute',
-              top: "22px",
-              left: "475px",
-              textDecoration: 'underline',
-              cursor: 'pointer'
-            }}
-          >
-            cancel
-          </div>
+          <Cancel 
+            onClick={() => props.homeToggle()}>
+              cancel
+          </Cancel>
         )
       case 'welcome':
       case 'setup':
         return ''
       default:
         return (
-          <div style={{
-            position: 'absolute',
-            top: "17px",
-            left: "425px"
-          }}>
-            <img 
+          <HeaderIcons>
+            <Icon 
               title="Search"
               src="dist/images/extension/popup/user_interface/Magnifier.svg" 
-              alt="search" style={{marginRight: '15px', height: '25px', cursor: 'pointer'}} 
+              alt="search"  
               onClick={() => props.toggleSearch()}
               />
-            <img 
+            <Icon 
               title="Menu"
               src="dist/images/extension/popup/user_interface/Plus Square.svg" 
-              alt="more" style={{marginRight: '15px', height: '25px', cursor: 'pointer'}}
+              alt="more" 
               onClick={() => props.toggleMore()}
               />
-            <img 
+            <Icon 
               title="settings"
               src="dist/images/extension/popup/user_interface/Setting.svg" 
-              alt="settings" style={{marginRight: '15px', height: '25px', cursor: 'pointer'}} 
+              alt="settings"  
               onClick={() => props.toggleSettings()}
             />
-        </div>
+        </HeaderIcons>
         )
     }
   }
 
   render() {
     return (
-      <div className="header heading1" style={{
-        position: 'relative',
-        background: '#F9F9F9',
-        height:'60px',
-        width: '550px'
-      }}>
-        <img className="logo" 
-          onClick={() => this.homeToggle()}
-          src="dist/images/extension/thumb/white.svg" alt="logo" 
-          style={{
-          position: 'absolute',
-          top: "15px",
-          left: "20px",
-          height: "30px",
-          cursor: 'pointer'
-        }}/>
-        <div style={{
-          position: 'absolute',
-          top: "19px",
-          left: "70px"
-        }}>
+      <MainHeader>
+        <WikaLogoFlex>
+          <WikaLogo
+            onClick={() => this.homeToggle()}
+            src="dist/images/extension/thumb/white.svg" alt="logo"
+          />
+        </WikaLogoFlex>
+        <Title>
           <this.titleSwitch page={this.context.page} />
-        </div>
+        </Title>
           <this.cancleOrButtons 
             page={this.context.page}
             toggleSearch={this.context.toggleSearch}
@@ -149,9 +126,39 @@ class Header extends React.Component {
             homeToggle={this.homeToggle}
             toggleSettings={this.context.toggleSettings}
           />
-      </div>
+      </MainHeader>
     )
   }
 }
 
-export default Header;
+const WikaLogoFlex = styled.div`
+  flex:.4;
+`
+const WikaLogo = styled.img`
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1));
+  height: 30px;
+  padding: 0 0 0 15px
+`
+const Title = styled.div`
+  flex:1.6;
+`
+const HeaderIcons = styled.div`
+  flex:0.6;
+  display: flex;
+  justify-content: center;
+  padding-right: 10px
+`
+const Icon = styled.img`
+  flex:1;
+  height:25px;
+  cursor: pointer;
+`
+const Cancel = styled.div`
+  flex: .3;
+  text-decoration: underline;
+  cursor: pointer;
+  ${BodyCopy};
+`
+
+export default SetupHeader;

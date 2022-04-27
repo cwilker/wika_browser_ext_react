@@ -2,7 +2,7 @@ import React from "react";
 import AppContext from "../../utils/context";
 import Button from "../Button";
 
-class MainFunctionButton extends React.Component {
+class WorkInProgress extends React.Component {
   static contextType = AppContext;
   constructor(props) {
     super(props);
@@ -18,15 +18,13 @@ class MainFunctionButton extends React.Component {
         height:'75px',
         width: '550px',
       }}>
-        <div onClick={() => this.context.togglePage(this.context.page, 'account')}>
+        <div>
           <Button content={
-            <div id='asdf' className='bodyCopy' 
-              style={{padding: '14px', color: "white"}} 
-            >
-              Back
-            </div>
-          } 
-          backgroundColor='#303D48' backgroundColorhover='black'
+              <div className='bodyCopy' style={{padding: '14px', color: "white"}}>
+                <div>Work in progress</div>
+              </div>
+            } 
+            onClick={() => this.context.togglePage(this.context.page, 'welcome')}
           />
         </div>
       </div>
@@ -34,4 +32,4 @@ class MainFunctionButton extends React.Component {
   }
 }
 
-export default MainFunctionButton;
+export default WorkInProgress;

@@ -16,46 +16,46 @@ const buttonFunction = (button, page, togglePage) => {
       <Button content={
         <img 
           style={{padding:'12px' }} src={"dist/images/Like" + lightButton['like'] + ".svg"}
-          onClick={() => togglePage(page, 'like')}
         />
         } 
         className='asdf'
         style={{display: 'inline-block'}}
         backgroundColor='white'
         backgroundColorhover='#E7E7E7'
+        onClick={() => togglePage(page, 'like')}
       />
       <Button content={
           <img 
             style={{padding:'12px'}} src={"dist/images/Buy" + lightButton['buy'] + ".svg"}
-            onClick={() => togglePage(page, 'buy')}
           />
         } 
         className='asdf'
         style={{display: 'inline-block'}}
         backgroundColor='white'
         backgroundColorhover='#E7E7E7'
+        onClick={() => togglePage(page, 'buy')}
       />
       <Button content={
           <img 
             style={{padding:'12px'}} src={"dist/images/Send" + lightButton['send'] + ".svg"}
-            onClick={() => togglePage(page, 'send')}
           />
         } 
         className='asdf'
         style={{display: 'inline-block'}}
         backgroundColor='white'
         backgroundColorhover='#E7E7E7'
+        onClick={() => togglePage(page, 'send')}
       />
       <Button content={
           <img 
             style={{padding:'12px'}} src={"dist/images/Claim" + lightButton['claim'] + ".svg"}
-            onClick={() => togglePage(page, 'claim')}
           />
         } 
         className='asdf'
         style={{display: 'inline-block'}}
         backgroundColor='white'
         backgroundColorhover='#E7E7E7'
+        onClick={() => togglePage(page, 'claim')}
       />
     </div>
   )
