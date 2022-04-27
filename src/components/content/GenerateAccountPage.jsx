@@ -1,7 +1,9 @@
 import React, {useContext} from "react";
 import YourAccount from "./Account";
-import styled from 'styled-components';
 import AppContext from "../../utils/context";
+import styled from 'styled-components';
+import {MainLabel, Padder} from '../styles/contentStyle';
+import {BodyCopy} from '../styles/textStyle';
 
 class GenerateAccountPage extends React.Component {
   static contextType = AppContext;
@@ -13,76 +15,72 @@ class GenerateAccountPage extends React.Component {
 
   render() {
     return (
-      <Wrapper>
-        <div className='main'>
-          <Padder padding="20px" >
+        <MainLabel>
+          <Container>
             <YourAccount  toggleAccountMenu={this.context.toggleAccountMenu} account={this.context.addAccount}  page={this.context.page} />
-            <Padder paddingTop='25px'>
-              <Padder padding="5px">
-                GENERATED 12-WORD MNEMONIC SEED 
-              </Padder>
-              <textarea id='seed' className='seedBox' defaultValue={this.context.addAccount.phrase} >
-              </textarea>
-              <div  className='copy' onClick={this.context.copyElement('seed')}  
-              >
-                <img className='copyText' src='dist/images/extension/Outline/Files/Copy.svg'></img>
+            <SeedContainer>
+              GENERATED 12-WORD MNEMONIC SEED 
+              <SeedBox id='seed' defaultValue={this.context.addAccount.phrase} >
+              </SeedBox>
+              <Copy onClick={this.context.copyElement('seed')} >
+                <CopyIcon src='dist/images/extension/Outline/Files/Copy.svg'></CopyIcon>
                 COPY TO CLIPBOARD
-              </div>
-              <Padder paddingTop='40px' >
-                <img className='mnemonicWarning' src='dist/images/extension/User Interface/exclamation triangle.svg'></img>
+              </Copy>
+            </SeedContainer>
+            <MnemonicWarning>
+              <img src='dist/images/extension/User Interface/exclamation triangle.svg'/>
+              <MnemonicMessage>
                 Please write down your wallet's mnemonic seed and keep it in a safe place. The mnemonic can be used to restore your wallet. Keep it carefully to not lose your assets.
-              </Padder>
-              <Padder paddingTop="120px">
-                <div className='mnemonicWarning'>
-                  <input type='checkbox' />
-                </div>
+              </MnemonicMessage>
+            </MnemonicWarning>
+
+            <MnemonicWarning>
+              <input type='checkbox' />
+              <MnemonicMessage>
                 I have saved my mnemonic seed safely
-              </Padder>
-            </Padder>
-          </Padder>
-        </div>
-      </Wrapper>
+              </MnemonicMessage>
+            </MnemonicWarning>
+          </Container>
+        </MainLabel>
     )
   }
 }
 
-const Padder = styled.div`
-  padding: ${props => props.padding || '0px'};
-  padding-top: ${props => props.paddingTop || props.padding || '0px'}
+const Container = styled.div`
+  flex: 1;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
 `
-
-const Wrapper = styled.div`
-  .main {
-    position: relative;
-    background: #F9F9F9;
-    height: 465px;
-    width: 550px;
-    outline: solid;
-    outline-color: #DFE1E5;
-    font-family: Helvetica;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-  }
-
-  .copy {
-    padding-top: 40px;
-    cursor: pointer;
-  }
-
-  .copyText {
-    float: left;
-    position: relative;
-    top: -10px;
-    padding-right: 10px;
-  }
-
-  .mnemonicWarning {
-    float: left;
-    position: relative;
-    top: -2px;
-    padding-right: 10px;
-  }
+const SeedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
-
+const Copy = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+const CopyIcon = styled.img`
+  margin-right: 5px;
+`
+const MnemonicWarning = styled.div`
+  display: flex;
+  align-items: center;
+`
+const MnemonicMessage = styled.div`
+  margin-left: 5px;
+`
+const SeedBox = styled.textarea`
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+  height: 40px;
+  background: #FFFFFF;
+  outline: solid;
+  outline-color: #DFE1E5;
+  color:#A77121;
+`
 export default GenerateAccountPage

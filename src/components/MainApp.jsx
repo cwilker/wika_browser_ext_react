@@ -7,7 +7,7 @@ import Utf8 from 'crypto-js/enc-utf8';
 import BACKGROUND from '../utils/global';
 import {encryptWithAES, decryptWithAES, bytesToHex, importAccount, generateAddAccount} from '../utils/misc';
 import '../css/index.css';
-import {parseError} from "../utils/misc";
+import {parseError, copyToClipboard} from "../utils/misc";
 import MoreContent from './menuPopups/MoreContent'
 import SearchContent from './menuPopups/searchContent';
 import AccountMenuContent from './menuPopups/AccountMenuContent';
@@ -27,10 +27,10 @@ class MainApp extends React.Component {
       isAccountOpen: false,
       addAccount: {accountName:'<Account Name>', address:'N/A'},
       previousPage: '',
-      accounts: {},
-      accountSelected: '',
+      accounts: {'a1':{accountName:'<Account Name>', address:'N/A'}},
+      accountSelected: 'a1',
       randomAccount: {},
-      page: 'welcome'
+      page: 'account'
     }
   }
 
@@ -40,7 +40,6 @@ class MainApp extends React.Component {
         BACKGROUND.network = network ;
         console.log('connected') ;
     }) ;
-    // BACKGROUND.storage = new StorageManagment();
     console.log('componentDidMount1')
     const accounts = await BACKGROUND.storage.get('accounts')
     const accountSelected = await BACKGROUND.storage.get('accountSelected')

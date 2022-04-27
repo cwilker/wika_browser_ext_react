@@ -1,7 +1,8 @@
 import React from "react";
 import AppContext from "../../utils/context";
 import YourAccount from "./Account";
-import Button from './../Button';
+import styled from 'styled-components';
+import {MainLabel, BodyCopy, Padder, SeedBox} from '../styles/contentStyle';
 
 class AccountSelectPage extends React.Component {
   static contextType = AppContext;
@@ -16,30 +17,34 @@ class AccountSelectPage extends React.Component {
     let accountKeys = Object.keys(this.context.accounts)
     const accountInfo = accountArray.map((account, i) =>{
       return (
-        <div key={i} style={{paddingBottom: '20px'}} onClick={() => {this.context.togglePage(this.context.page, 'account'); this.context.selectAccount(accountKeys[i])}}>
-          <Button 
-            content={
-              <YourAccount 
-                toggleAccountMenu={this.context.toggleAccountMenu} 
-                account={accountArray[i]}
-                page={this.context.page} 
-              />
-            } 
-            className='a'
-            backgroundColor='white'
-            backgroundColorhover='#E7E7E7'
-          />
-        </div>
+        <Padder paddingBottom='20px' key={i}>
+          <MainButton onClick={() => {this.context.togglePage(this.context.page, 'account'); this.context.selectAccount(accountKeys[i])}}>
+            <YourAccount 
+              toggleAccountMenu={this.context.toggleAccountMenu} 
+              account={accountArray[i]}
+              page={this.context.page} 
+            />
+          </MainButton>
+        </Padder>
       )
     })
     return (
-      <div className='mainContent bodyLabel'>
-        <div className='mainInside' >
+      <MainLabel>
+        <Padder padding='20px'>
           {accountInfo}
-        </div>
-      </div>
+        </Padder>
+      </MainLabel>
     )
   }
 }
+
+const MainButton = styled.button`
+  ${BodyCopy};
+  border: none;
+  position: relative;
+  height: 30px;
+  width: 100%;
+  background-color:white;
+` 
 
 export default AccountSelectPage;

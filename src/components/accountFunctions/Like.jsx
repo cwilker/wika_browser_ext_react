@@ -18,8 +18,7 @@ class Like extends React.Component {
   dependentLike (likeURLSelected) {
     if (likeURLSelected) {
       return (
-        <div style={{display: 'inline-block',  paddingTop:'5px'}}
-          onClick={() => this.state.togglePage(this.props.page, 'like2')}>
+        <div style={{display: 'inline-block',  paddingTop:'5px'}}>
           <Button className='mainText bodyCopy' 
             style={{width: '84px', outlineColor: '#4BA520'}}
             content={
@@ -29,7 +28,8 @@ class Like extends React.Component {
             }
             backgroundColor='#4BA520'
             backgroundColorhover='#26620A'
-            />
+            onClick={() => this.state.togglePage(this.props.page, 'like2')}
+          />
         </div>
       )
     } else {
@@ -72,8 +72,7 @@ class Like extends React.Component {
               placeholder="your.url/to/like" onChange={() => this.setState({likeURL:document.getElementById('likeURL').value})}
             />
           </div>
-          <div style={{display: 'inline-block', paddingTop:'5px'}}
-            onClick={() => this.setState({likeURLSelected:true})}>
+          <div style={{display: 'inline-block', paddingTop:'5px'}}>
             <Button className='mainText bodyCopy' 
               style={{ float: 'left', width: '214px', outlineColor: '#4493BD'}}
               content={
@@ -81,7 +80,8 @@ class Like extends React.Component {
                   {(this.state.likeURLSelected)? "clear": "Lookup URL status"}
                 </div>
               }
-              />
+              onClick={() => this.setState({likeURLSelected:true})}
+            />
           </div>
         </div>
 

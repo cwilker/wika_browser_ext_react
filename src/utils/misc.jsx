@@ -12,6 +12,10 @@ function copyToClipboard(inputId) {
     document.execCommand("copy");
 }
 
+function copyElement(element) {
+    copyToClipboard(element) ;
+  }
+
 function convertToWika(value) {
     return value / BALANCE_UNIT;
 }
@@ -161,6 +165,7 @@ function generateAddAccount() {
 
 export {
     copyToClipboard,
+    copyElement,
     convertToWika,
     formatWika,
     wikaToUsd,

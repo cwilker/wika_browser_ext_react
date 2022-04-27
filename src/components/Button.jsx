@@ -14,7 +14,8 @@ class Button extends React.Component {
       style: props.style,
       backgroundColorhover: props.backgroundColorhover,
       backgroundColor: props.backgroundColor,
-      className: props.className
+      className: props.className,
+      onClick: props.onClick
     }
   }
 
@@ -35,6 +36,7 @@ class Button extends React.Component {
     let backgroundColorhover = (this.state.backgroundColorhover) ? this.state.backgroundColorhover:'#2A749B'
     let backgroundColor = (this.state.backgroundColor) ? this.state.backgroundColor:'#4493BD'
     let className = (this.state.className) ? this.state.className:'mainbutton'
+    let onClick = (this.state.onClick) ? this.state.onClick : () => console.log('do nothing')
     if (this.state.hover) {
       linkStyle = {backgroundColor: backgroundColorhover, cursor: 'pointer'}
     } else {
@@ -44,7 +46,8 @@ class Button extends React.Component {
     return(
       <div className={className} style={{...linkStyle, ...style}} 
         onMouseEnter={() => this.toggleHover()} 
-        onMouseLeave={() => this.toggleExitHover()}>
+        onMouseLeave={() => this.toggleExitHover()}
+        onClick={() => onClick()}>
         {this.state.content}
       </div>
     )

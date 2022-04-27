@@ -19,7 +19,7 @@ class MoreContent extends React.Component {
           <div>
             <Button className="bodyLabel moreRowTop"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'like'); this.context.toggleMore()}}>
+                <div className="moreButtonBottom">
                   <img 
                     src="dist/images/LikeOnly.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -31,11 +31,12 @@ class MoreContent extends React.Component {
               }
               backgroundColor='#F9F9F9'
               backgroundColorhover='#E7E7E7'
+              onClick={() => {this.context.togglePage(this.context.page, 'like'); this.context.toggleMore()}}
             />
 
             <Button className="bodyLabel moreRowTop"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'buy'); this.context.toggleMore()}}>
+                <div className="moreButtonBottom">
                   <img 
                     src="dist/images/BuyGrey.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -47,11 +48,12 @@ class MoreContent extends React.Component {
               }
               backgroundColor='#F9F9F9'
               backgroundColorhover='#E7E7E7'
+              onClick={() => {this.context.togglePage(this.context.page, 'buy'); this.context.toggleMore()}}
             />
 
             <Button className="bodyLabel moreRowTop"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'send'); this.context.toggleMore()}}>
+                <div className="moreButtonBottom">
                   <img 
                     src="dist/images/SendPlane.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -63,12 +65,13 @@ class MoreContent extends React.Component {
               }
               backgroundColor='#F9F9F9'
               backgroundColorhover='#E7E7E7'
+              onClick={() => {this.context.togglePage(this.context.page, 'send'); this.context.toggleMore()}}
             />
 
 
             <Button className="bodyLabel moreRowBottom"
               content={
-                <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'claim'); this.context.toggleMore()}}>
+                <div className="moreButtonBottom">
                   <img 
                     src="dist/images/ClaimOnly.svg" 
                     alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -80,12 +83,13 @@ class MoreContent extends React.Component {
               }
               backgroundColor='#F9F9F9'
               backgroundColorhover='#E7E7E7'
+              onClick={() => {this.context.togglePage(this.context.page, 'claim'); this.context.toggleMore()}}
             />
 
         
         <Button className="bodyLabel moreRow"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'accountSelect'); this.context.toggleMore()}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/extension/popup/Arrows/Connection.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -97,6 +101,7 @@ class MoreContent extends React.Component {
           }
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.context.page, 'accountSelect'); this.context.toggleMore()}}
         />
           </div>
         )
@@ -111,7 +116,7 @@ class MoreContent extends React.Component {
         <Button 
           className="bodyLabel moreRow"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'generate'); this.context.newAccount(); this.context.toggleMore()}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/extension/popup/user_interface/Plus Square.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -123,11 +128,12 @@ class MoreContent extends React.Component {
           } 
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.context.page, 'generate'); this.context.newAccount(); this.context.toggleMore()}}
         />
         <Button 
           className="bodyLabel moreRow"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'addAccount'); this.context.toggleMore()}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/Download.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -139,13 +145,14 @@ class MoreContent extends React.Component {
           } 
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.context.page, 'addAccount'); this.context.toggleMore()}}
         />
 
         {this.actionButtons()}
 
         <Button className="bodyLabel moreRowTop"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'wip'); this.context.toggleMore()}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/extension/popup/Content/dialpad.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -157,11 +164,12 @@ class MoreContent extends React.Component {
           }
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.context.page, 'wip'); this.context.toggleMore()}}
         />
 
         <Button className="bodyLabel moreRowBottom"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.context.page, 'wip'); this.context.toggleMore()}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/extension/popup/Cloud and Web/server connection.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -173,6 +181,7 @@ class MoreContent extends React.Component {
           }
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.context.page, 'wip'); this.context.toggleMore()}}
         />
       </div>
     )

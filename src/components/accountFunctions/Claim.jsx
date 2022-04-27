@@ -18,7 +18,7 @@ class Claim extends React.Component {
       return (
         <div>
           <div style={{display: 'inline-block', paddingTop:'5px'}}
-            onClick={() => this.state.togglePage(this.props.page, 'claim')}>
+            >
             <Button className='mainText bodyCopy' 
               style={{ float: 'left', width: '214px', outlineColor: '#4493BD'}}
               content={
@@ -26,6 +26,7 @@ class Claim extends React.Component {
                   Clear
                 </div>
               }
+              onClick={() => this.state.togglePage(this.props.page, 'claim')}
               />
           </div>
           <div className='bodycopy' style={{paddingTop:'25px'}}>
@@ -73,8 +74,7 @@ class Claim extends React.Component {
             </div>
           </div>
 
-          <div style={{display: 'inline-block', paddingTop:'15px'}}
-            onClick={() => this.state.togglePage(this.props.page, 'claim2')}>
+          <div style={{display: 'inline-block', paddingTop:'15px'}}>
             <Button className='mainText bodyCopy' 
               style={{ float: 'left', width: '472px', outlineColor: '#4493BD'}}
               content={
@@ -82,6 +82,7 @@ class Claim extends React.Component {
                   Submit
                 </div>
               }
+              onClick={() => this.state.togglePage(this.props.page, 'claim2')}
               />
           </div>
           <div style={{textAlign:'center', paddingTop:4}}>
@@ -92,8 +93,7 @@ class Claim extends React.Component {
     } else {
       return (
         <div>
-          <div style={{display: 'inline-block', paddingTop:'5px'}}
-            onClick={() => this.setState({claimUrlSelected:true})}>
+          <div style={{display: 'inline-block', paddingTop:'5px'}}>
             <Button className='mainText bodyCopy' 
               style={{ float: 'left', width: '214px', outlineColor: '#4493BD'}}
               content={
@@ -101,6 +101,7 @@ class Claim extends React.Component {
                   Lookup URL status
                 </div>
               }
+              onClick={() => this.setState({claimUrlSelected:true})}
               />
           </div>
           <div style={{textAlign:'center', paddingTop: '192.5px'}}>

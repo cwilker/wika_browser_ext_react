@@ -35,7 +35,7 @@ class SettingsContent extends React.Component {
 
         <Button className="bodyLabel moreRowTop"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'wip')}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/keyhole.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -47,11 +47,12 @@ class SettingsContent extends React.Component {
           }
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.props.page, 'wip')}}
         />
 
         <Button className="bodyLabel moreRowBottom"
           content={
-            <div className="moreButtonBottom" onClick={() => {this.context.togglePage(this.props.page, 'wip')}}>
+            <div className="moreButtonBottom">
               <img 
                 src="dist/images/window.svg" 
                 alt="search" style={{marginRight: '15px', height: '25px'}} 
@@ -63,6 +64,7 @@ class SettingsContent extends React.Component {
           }
           backgroundColor='#F9F9F9'
           backgroundColorhover='#E7E7E7'
+          onClick={() => {this.context.togglePage(this.props.page, 'wip')}}
         />
       </div>
     )

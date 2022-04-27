@@ -1,7 +1,7 @@
 import React from 'react';
-import Identicon from 'react-identicons';
+import Jdenticon from 'react-jdenticon';
 import AppContext from "../../utils/context";
-import {copyToClipboard} from "../../utils/misc";
+import styled from 'styled-components';
 
 class YourAccount extends React.Component {
   static contextType = AppContext;
@@ -13,12 +13,9 @@ class YourAccount extends React.Component {
       style: props.style,
       content: props.content,
       selectAccount: props.selectAccount,
-      page: props.page
+      page: props.page,
+      className: props.className
     }
-  }
-
-  copyElement = (element) => () => {
-    copyToClipboard(element) ;
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -40,25 +37,22 @@ class YourAccount extends React.Component {
         )
       default:
         return(
-          <div>
-            <div style={{position: 'absolute', top:'10px', left: '440px'}}>
-            <img src="dist/images/extension/Outline/Status/Eye.svg"></img>
-            <br/>
-            <img 
-              title="copy address"
-              src="dist/images/extension/Outline/Files/Copy.svg"
-              style={{cursor: 'pointer'}}
-              onClick={this.copyElement("account_address_element")}
-            ></img>
-            </div>  
-            <img style={{position: 'absolute', top:'10px', left: '470px'}}
-              src="dist/images/extension/Vector 2.svg"></img>
-            <img 
-              title="Account Settings"
+          <AccountButtons>
+            <EyeCopy>
+              <img src="dist/images/extension/Outline/Status/Eye.svg"/>
+              <img 
+                title="copy address"
+                src="dist/images/extension/Outline/Files/Copy.svg"
+                style={{cursor: 'pointer'}}
+                onClick={this.context.copyElement("account_address_element")}
+              />
+            </EyeCopy>  
+            <Line 
+              src="dist/images/extension/Vector 2.svg"/>
+            <Hamburger 
               onClick={() => this.context.toggleAccountMenu()}
-              style={{position: 'absolute', top:'18px', left: '468px', cursor:'pointer'}} 
-              src="dist/images/extension/User Interface/Menu.svg"></img>
-          </div>
+              src="dist/images/extension/User Interface/Menu.svg"></Hamburger>
+          </AccountButtons>
         )
     }
   }
@@ -66,28 +60,68 @@ class YourAccount extends React.Component {
   render() {
     let style=this.props.style
     return (
-      <div className='accountBox' style={{...style}}>
-          <div className='identicon' style={{float:'left'}}>
-            {<Identicon string={this.state.account.address} size={40}/>}
-          </div>
-          <div className='accountName bodyCopy'>
+      <MainAccount>
+        <Identicon>
+          <Jdenticon size={40} value={this.state.account.address}/>
+        </Identicon>
+        <AccountInfo>
+          <AccountName className='accountName bodyCopy'>
             {this.state.account.accountName}
-          </div>
-
+          </AccountName>
           <input id="account_address_element"
             type="text"
             className='accountAddress bodyLabel'
             value={this.state.account.address}
             readOnly={true}
-            style={{width:300, border:'none'}}
           />
-        {this.renderSelectButtonOrOptions()}
-        <div style={{paddingTop:'80px'}}>
-          {this.props.content}
-        </div>
-      </div>
+        </AccountInfo>
+        <AccountButtonContainer>
+          {this.renderSelectButtonOrOptions()}
+        </AccountButtonContainer>
+      </MainAccount>
     )
   }
 }
 
+const MainAccount = styled.div`
+  border: solid;
+  padding: 8px;
+  border-color: #C2C2C2;
+  border-radius: 10px;
+  display:flex;
+  align-items: center;
+`
+const Identicon = styled.div`
+  margin: 3px;
+  padding: 3px 3px 0px 3px;
+  flex:0;
+  background: white;
+  border: solid;
+  border-radius: 5px;
+  border-color: #4493BD;
+`
+const AccountInfo = styled.div`
+  flex:4;
+  margin-left: 10px
+`
+const AccountName = styled.div`
+  margin-bottom: 5px
+`
+const AccountButtonContainer = styled.div`
+  flex:1;
+`
+const AccountButtons = styled.div`
+  display:flex;
+  align-items:center;
+`
+const EyeCopy = styled.div`
+  cursor: pointer;
+`
+const Line = styled.img`
+  padding-left: 10px;
+`
+const Hamburger = styled.img`
+  cursor: pointer;
+  height:30px;
+`
 export default YourAccount;

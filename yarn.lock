@@ -1876,6 +1876,13 @@
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz"
   "version" "1.0.30001312"
 
+"canvas-renderer@~2.2.0":
+  "integrity" "sha512-Itdq9pwXcs4IbbkRCXc7reeGBk6i6tlDtZTjE1yc+KvYkx1Mt3WLf6tidZ/Ixbm7Vmi+jpWKG0dRBor67x9yGw=="
+  "resolved" "https://registry.npmjs.org/canvas-renderer/-/canvas-renderer-2.2.0.tgz"
+  "version" "2.2.0"
+  dependencies:
+    "@types/node" "*"
+
 "caseless@~0.12.0":
   "integrity" "sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw="
   "resolved" "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz"
@@ -3695,6 +3702,13 @@
     "html-escaper" "^2.0.0"
     "istanbul-lib-report" "^3.0.0"
 
+"jdenticon@^3.1.1":
+  "integrity" "sha512-/m0Kk5ou7tPHjW6YovCysRETqPlFcTabWG96r8NbbSsEK+eQ3jHiGULaGOtp4XBqkRxWS1XMopLRGwdhet5ezw=="
+  "resolved" "https://registry.npmjs.org/jdenticon/-/jdenticon-3.1.1.tgz"
+  "version" "3.1.1"
+  dependencies:
+    "canvas-renderer" "~2.2.0"
+
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
   "resolved" "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -4944,6 +4958,14 @@
   "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
+
+"react-jdenticon@^1.0.0":
+  "integrity" "sha512-TMNEq1VRQjQgRnaUMQesWrhUmqlIeESMFM1Q+tNt0Zl8UUQWhmssnk2S2iKd4zpImOsU9PN3BCAYi5bnHgf1zw=="
+  "resolved" "https://registry.npmjs.org/react-jdenticon/-/react-jdenticon-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "jdenticon" "^3.1.1"
+    "prop-types" "^15.8.1"
 
 "react-refresh@^0.9.0":
   "integrity" "sha512-Gvzk7OZpiqKSkxsQvO/mbTN1poglhmAV7gR/DdIrRrSMXraRQQlfikRJOr3Nb9GTMPC5kof948Zy6jJZIFtDvQ=="
