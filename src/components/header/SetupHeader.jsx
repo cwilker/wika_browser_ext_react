@@ -1,14 +1,9 @@
 import React from 'react';
-<<<<<<< HEAD:src/components/MainHeader.jsx
-
-import AppContext from "../utils/context";
-=======
 import AppContext from "../../utils/context";
 import styled from 'styled-components';
 import {MainHeader} from '../styles/headerStyle.jsx'
 import {Heading1, BodyCopy, BodyLabel} from '../styles/contentStyle';
 
->>>>>>> cwilly:src/components/header/SetupHeader.jsx
 
 class SetupHeader extends React.Component {
   static contextType = AppContext;
